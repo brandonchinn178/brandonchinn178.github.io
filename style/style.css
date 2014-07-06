@@ -14,7 +14,7 @@ h1
     padding: 0;
     color: #EEEEEE;
     font-family: "GeosansItalic";
-    font-size: 2em;
+    font-size: 2.2em;
 }
 
 p
@@ -24,13 +24,14 @@ p
     padding: 0;
     color: #4C7EB1;
     font-family: "Geosans";
-    font-size: 1.2em;
+    font-size: 1.3em;
 }
 
 a
 {
     color: #EEEEEE;
     font-style: italic;
+    font-weight: bold;
     text-decoration: none;
 }
 
@@ -49,7 +50,7 @@ li
 {
     font-family: "Geosans";
     color: #4C7EB1;
-    font-size: 1.2em;
+    font-size: 1.3em;
     line-height: 1.4em;
 }
 
@@ -111,7 +112,8 @@ img
     top: -10px;
     white-space: nowrap;
     overflow: hidden;
-    font-size: 1.5em;
+    font-size: 1.8em;
+    font-style: italic;
 }
 
 #header #portrait
@@ -187,11 +189,16 @@ img
     display: inline;
     margin: 1em;
     line-height: 1em;
-    font-size: 1em;
+    font-size: 1.3em;
     color: #EEEEEE;
 }
 
 #footer ul li a
 {
     color: #EEEEEE;
+}
+
+#footer a:hover
+{
+    color: #4C7EB1;
 }
