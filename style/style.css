@@ -10,11 +10,18 @@ body
 h1
 {
     margin: 0;
-    margin-bottom: .5em;
     padding: 0;
+    line-height: 1em;
     color: #EEEEEE;
     font-family: "GeosansItalic";
     font-size: 2.2em;
+}
+
+hr
+{
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0,0,0,.5);
 }
 
 p
