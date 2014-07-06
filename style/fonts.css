@@ -1,11 +1,11 @@
 @font-face
 {
     font-family: "Geosans";
-    src: url(../resources/fonts/GeosansLight.ttf) format("truetype");
+    src: url(../style/fonts/GeosansLight.ttf) format("truetype");
 }
 
 @font-face
 {
     font-family: "GeosansItalic";
-    src: url(../resources/fonts/GeosansLight-Oblique.ttf) format("truetype");
+    src: url(../style/fonts/GeosansLight-Oblique.ttf) format("truetype");
 }

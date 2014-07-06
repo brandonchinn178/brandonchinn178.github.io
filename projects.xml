@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<projects>
+
+    <project>
+        <name>Worship Database</name>
+        <link>http://worshipdatabase.webs.com</link>
+        <img>screenshot_worship.png</img>
+    </project>
+
+    <project>
+        <name>Binary Numbers</name>
+        <link>/binary</link>
+        <img>screenshot_binary.png</img>
+    </project>
+
+</projects>
