@@ -6,7 +6,7 @@ nav
     padding: 0;
     position: relative;
     margin-top: -100px;
-    width: 22em;
+    width: 24em;
     float: right;
 }
 
@@ -16,6 +16,7 @@ nav a
     padding: .85em .9em;
     color: #EEEEEE;
     font-family: "GeosansItalic";
+    font-size: 1.1em;
     text-decoration: none;
 }
 
