@@ -219,6 +219,11 @@ img
     background-color: rgba(148,181,194,.7);
 }
 
+#footer ul
+{
+    min-width: 35em;
+}
+
 #footer ul li
 {
     display: inline;
