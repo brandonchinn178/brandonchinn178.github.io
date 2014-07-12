@@ -100,13 +100,14 @@ table
     font-family: "Geosans";
     font-size: 1.3em;
     color: #4C7EB1;
-    margin: .3em 0;
+    margin: .3em 0 .3em 2em;
 }
 
 td
 {
     padding: .1em .5em;
     padding-left: 0;
+    vertical-align: top;
 }
 
 td li
@@ -202,7 +203,7 @@ td li
 
 #main #projects
 {
-    margin-bottom: 2em;
+    margin: 2em 0;
     font-size: 1.5em;
     font-weight: bold;
     width: 100%;
@@ -211,6 +212,7 @@ td li
 #main #projects td
 {
     text-align: right;
+    vertical-align: middle;
     padding: .5em;
 }
 
