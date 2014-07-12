@@ -17,7 +17,7 @@
         <class>
             <name>Physics for Scientists and Engineers</name>
             <id>Physics 7A</id>
-            <note>Kinematics and waves</note>
+            <note>Kinematics and Waves</note>
         </class>
 
         <class>
@@ -49,7 +49,7 @@
         </class>
     </semester>
 
-    <semester category="current">
+    <semester>
         <title>Fall 2014</title>
 
         <class category="highlight">

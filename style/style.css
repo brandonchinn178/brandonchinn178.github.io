@@ -95,6 +95,25 @@ img
     margin: 0;
 }
 
+table
+{
+    font-family: "Geosans";
+    font-size: 1.3em;
+    color: #4C7EB1;
+    margin: .3em 0;
+}
+
+td
+{
+    padding: .1em .5em;
+    padding-left: 0;
+}
+
+td li
+{
+    font-size: 1em;
+}
+
 #container
 {
     margin-left: auto;
@@ -179,11 +198,6 @@ img
 #main
 {
     margin: 0;
-}
-
-#main #projects
-{
-    list-style: none;
 }
 
 #main #projects

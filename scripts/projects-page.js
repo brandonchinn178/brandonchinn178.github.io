@@ -12,7 +12,7 @@ function addProjects() {
     
     var projects = xmlDoc.getElementsByTagName("project");
     
-    for (i = 0; i < projects.length; i++) {
+    for (var i = 0; i < projects.length; i++) {
         var tr = document.createElement("tr");
         var td_name = document.createElement("td");
         var td_img = document.createElement("td");
