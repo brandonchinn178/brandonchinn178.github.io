@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title> Brandon Chinn - {{ page.title }} </title>
+        <link rel="stylesheet" href="/style/style.css" />
+        <link rel="stylesheet" href="/style/nav.css" />
+        {% if page.style %}<link rel="stylesheet" href="/style/{{ page.style }}" />{% endif %}
+        <link rel="shortcut icon" href="/resources/BC.ico" />
+        <script src="/resources/jquery.js"></script>
+        <script src="/scripts/nav-projects.js"></script>
+        {% if page.script %}<script src="/scripts/{{ page.script }}"></script>{% endif %}
+    </head>
+
+    <body>
+        {% include header.html %}
+
+        {% include nav.html %}
+
+        <div id="main">
+            {{ content }}
+        </div>
+
+        {% include footer.html %}
+    </body>
+</html>

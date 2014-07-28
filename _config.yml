@@ -1,0 +1,13 @@
+name: "Brandon Chinn"
+description: ""
+
+url: "localhost:4000"
+
+timezone: "America/Lost_Angeles"
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
