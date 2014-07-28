@@ -5,6 +5,8 @@ url: "localhost:4000"
 
 timezone: "America/Lost_Angeles"
 
+markdown: kramdown
+
 defaults:
   -
     scope:

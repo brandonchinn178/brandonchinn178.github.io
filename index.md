@@ -9,4 +9,4 @@ Hello, and welcome to my site! To learn more about me, either personally or tech
 
 About This Site
 ---------------
-This site is hosted using <a href="http://pages.github.com" target="_blank">GitHub Pages</a>, using my GitHub account. I wrote this website from scratch, using <a href="http://sublimetext.com" target="_blank">Sublime Text</a> to write the HTML, CSS, and Javascript files. The font used is from the <a href="http://www.dafont.com/geo-sans-light.font" target="_blank">Geosans Light</a> font family.
+This site is hosted using <a href="http://pages.github.com" target="_blank">GitHub Pages</a> and is built using the static-site generator<a href="http://jekyllrb.com" target="_blank">Jekyll</a>. I wrote this website from scratch, using <a href="http://sublimetext.com" target="_blank">Sublime Text</a> to write the files. The font used is from the <a href="http://www.dafont.com/geo-sans-light.font" target="_blank">Geosans Light</a> font family.
