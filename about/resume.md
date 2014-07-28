@@ -15,7 +15,7 @@ My r&eacute;sum&eacute; is available for download [here](/resources/resume.pdf) 
 Java, Python, HTML, CSS, Javascript
 
 ### Tools / Packages ###
-Git, Tkinter, JQuery
+Git, Tkinter, JQuery, Jekyll, Django
 
 ## Education ##
 
