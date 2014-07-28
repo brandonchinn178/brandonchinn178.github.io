@@ -21,6 +21,7 @@ Git, Tkinter, JQuery
 
 ### University of California, Berkeley, 2013 &ndash; present ###
 Intended Computer Science Major
+
 <table>
     <tr>
         <td><b>Current Courses:</b></td>
