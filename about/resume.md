@@ -7,7 +7,7 @@ script: classes.js
 
 R&eacute;sum&eacute;
 ====================
-My r&eacute;sum&eacute; is available for download [here](/resources/resume.pdf) as a PDF, or reformatted below for a more website-friendly and slightly more comprehensive version.
+My r&eacute;sum&eacute; is available for download <a href="/resources/resume.pdf" download>here</a> as a PDF, or reformatted below for a more website-friendly and slightly more comprehensive version.
 
 ## Technical Skills ##
 
@@ -20,7 +20,7 @@ Git, Tkinter, JQuery, Jekyll, Django
 ## Education ##
 
 ### University of California, Berkeley, 2013 &ndash; present ###
-Intended Computer Science Major
+Intended Computer Science Major, GPA: 3.72
 
 <table>
     <tr>
@@ -29,11 +29,12 @@ Intended Computer Science Major
     </tr>
     <tr id="courses"></tr>
     <tr>
-        <td><b><a href="#" onclick="return show()">show all</a> &middot; <a href="#" onclick="return filter()">hide</a></b></td>
+        <td><b><a href="#" onclick="return addCourses(false);">show all</a> &middot; <a href="#" onclick="return addCourses(true);">hide</a></b></td>
     </tr>
 </table>
 
 ### Northwood High School, 2009 &ndash; 2013 ###
+GPA: 4.18
 
 ## Work Experience ##
 

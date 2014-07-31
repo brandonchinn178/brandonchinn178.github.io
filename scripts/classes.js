@@ -1,6 +1,9 @@
-$(document).ready(filter);
+$(document).ready(function() {
+    addCourses(true);
+});
 
 function addCourses(filter) {
+    $("#courses").empty();
     var row = document.getElementById("courses");
 
     if (window.XMLHttpRequest) {  // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -54,23 +57,6 @@ function addCourses(filter) {
     tdCurrent.rowSpan = 2;
     row.appendChild(tdCurrent);
     row.appendChild(tdPast);
-}
 
-function clearNodes() {
-    var tr = document.getElementById("courses");
-    while(tr.firstChild) {
-        tr.removeChild(tr.firstChild);
-    }
-}
-
-function show() {
-    clearNodes();
-    addCourses(false);
-    return false;
-}
-
-function filter() {
-    clearNodes();
-    addCourses(true);
     return false;
 }
