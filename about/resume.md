@@ -7,7 +7,7 @@ script: classes.js
 
 R&eacute;sum&eacute;
 ====================
-My r&eacute;sum&eacute; is available for download <a href="/resources/resume.pdf" download>here</a> as a PDF, or reformatted below for a more website-friendly and slightly more comprehensive version.
+My r&eacute;sum&eacute; is available for download [here](resources/resume.pdf) as a PDF, or reformatted below for a more website-friendly and slightly more comprehensive version.
 
 ## Technical Skills ##
 
