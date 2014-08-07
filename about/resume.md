@@ -57,7 +57,6 @@ GPA: 4.18
 ## Personality ##
 
 ### Leadership ###
-* Leader of small group at church, meeting every week. Involves connecting with each person and meeting their needs, in any way possible
 * Worship leader at churches, both in Berkeley and at home, since 2007. Involves preparing song sets, organizing practices, and maintaining musicianship
 * Often take initiative on jobs and projects, which are always completed in a timely manner
 
