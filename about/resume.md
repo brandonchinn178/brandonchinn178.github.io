@@ -67,5 +67,5 @@ GPA: 4.18
 * Always available to do my part to help out in any way possible
 
 ### Resourceful ###
-* <a href="http://worshipdatabase.webs.com" target="_blank">Worship Song Database</a> &mdash; personal project. Self-studied HTML, CSS, and Javascript, including JQuery. Rudimentary site, yet functioning.
+* <a href="http://worshipdatabase.info" target="_blank">Worship Song Database</a> &mdash; personal project. Self-studied HTML, CSS, and Javascript, including JQuery. Rudimentary site, yet functioning.
 * Self-studied Python packages for LeapYear Innovations project. Gained a deeper and comprehensive understanding of the packages utilized for the application.
