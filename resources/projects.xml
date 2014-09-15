@@ -3,6 +3,12 @@
 <projects>
 
     <project>
+        <name>Calchart Viewer</name>
+        <link>http://calband.github.io/calchart-viewer</link>
+        <img>screenshot_calchart.png</img>
+    </project>
+
+    <project>
         <name>Worship Database</name>
         <link>http://worshipdatabase.info</link>
         <img>screenshot_worship.png</img>

@@ -1,62 +1,55 @@
 $(document).ready(function() {
-    addCourses(true);
+    $.get("/resources/classes.xml", addCourses);
 });
 
-function addCourses(filter) {
-    $("#courses").empty();
-    var row = document.getElementById("courses");
-
-    if (window.XMLHttpRequest) {  // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-    } else {  // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.open("GET","/resources/classes.xml", false);
-    xmlhttp.send();
-    xmlDoc = xmlhttp.responseXML;
-    
+function addCourses(xmlDoc) {
     var semesters = xmlDoc.getElementsByTagName("semester");
-
     var tdPast = document.createElement("td");
     var tdCurrent = document.createElement("td");
 
     for (var i = 0; i < semesters.length; i++) {
-        var current = i == semesters.length - 1;
-
-        var title = document.createTextNode(semesters[i].getElementsByTagName("title")[0].childNodes[0].nodeValue);
-        if (current) {
-            tdCurrent.appendChild(title);
-        } else {
-            tdPast.appendChild(title);
-        }
+        var column = (i == semesters.length - 1) ? tdCurrent : tdPast;
+        var title = semesters[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+        title = document.createTextNode(title);
 
         var classesNode = document.createElement("ul");
         var classes = semesters[i].getElementsByTagName("class");
 
         for (var j = 0; j < classes.length; j++) {
-            if (current || !filter || classes[j].getAttribute("category") === "highlight") {
-                var li = document.createElement("li");
-                var name = classes[j].getElementsByTagName("name")[0].childNodes[0].nodeValue;
-                var id = classes[j].getElementsByTagName("id")[0].childNodes[0].nodeValue;
-                var note = classes[j].getElementsByTagName("note")[0].childNodes[0];
-                var liText = document.createTextNode(name + " [" + id + "]");
-                if (note) {
-                    liText.appendData(" >> " + note.nodeValue);
-                }
-                li.appendChild(liText);
-                classesNode.appendChild(li);
+            var li = document.createElement("li");
+            if (column !== tdCurrent && classes[j].getAttribute("category") !== "highlight") {
+                li.className = "hidable";
+                li.style.display = "none";
             }
+
+            var name = classes[j].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+            var id = classes[j].getElementsByTagName("id")[0].childNodes[0].nodeValue;
+            var note = classes[j].getElementsByTagName("note")[0].childNodes[0];
+
+            var liText = document.createTextNode(name + " [" + id + "]");
+            if (note) {
+                liText.appendData(" >> " + note.nodeValue);
+            }
+            li.appendChild(liText);
+            classesNode.appendChild(li);
         }
-        if (current) {
-            tdCurrent.appendChild(classesNode);
-        } else {
-            tdPast.appendChild(classesNode);
-        }
+
+        column.appendChild(title);
+        column.appendChild(classesNode);
     }
 
     tdCurrent.rowSpan = 2;
-    row.appendChild(tdCurrent);
-    row.appendChild(tdPast);
+    $("#courses")[0].appendChild(tdCurrent);
+    $("#courses")[0].appendChild(tdPast);
+}
+
+// true -> show; false -> hide
+function filter(show) {
+    if (show) {
+        $(".hidable").show();
+    } else {
+        $(".hidable").hide();
+    }
 
     return false;
 }

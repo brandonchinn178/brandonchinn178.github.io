@@ -1,16 +1,9 @@
-$(document).ready(addProjects);
+$(document).ready(function() {
+    $.get("/resources/projects.xml", addProjectsToNav);
+});
 
-function addProjects() {
-    if (window.XMLHttpRequest) {  // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-    } else {  // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.open("GET","/resources/projects.xml", false);
-    xmlhttp.send();
-    xmlDoc = xmlhttp.responseXML;
-    
-    var projects = xmlDoc.getElementsByTagName("project");
+function addProjectsToNav(xmlDoc) {
+    var projects = window._projects = xmlDoc.getElementsByTagName("project");
     
     for (var i = 0; i < projects.length; i++) {
         var li = document.createElement("li");
@@ -23,5 +16,9 @@ function addProjects() {
         a.appendChild(text);
         li.appendChild(a);
         document.getElementById("nav-projects").appendChild(li);
+    }
+
+    if (typeof addProjectTable !== "undefined") {
+        addProjectTable();
     }
 }

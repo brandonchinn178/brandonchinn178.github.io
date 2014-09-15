@@ -1,16 +1,5 @@
-$(document).ready(addProjects);
-
-function addProjects() {
-    if (window.XMLHttpRequest) {  // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-    } else {  // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.open("GET","/resources/projects.xml", false);
-    xmlhttp.send();
-    xmlDoc = xmlhttp.responseXML;
-    
-    var projects = xmlDoc.getElementsByTagName("project");
+function addProjectTable() {
+    var projects = window._projects;
     
     for (var i = 0; i < projects.length; i++) {
         var tr = document.createElement("tr");
@@ -20,14 +9,15 @@ function addProjects() {
         var img = document.createElement("img");
 
         var name = projects[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
-        var text = document.createTextNode(name);
+        name = document.createTextNode(name);
         var link = projects[i].getElementsByTagName("link")[0].childNodes[0].nodeValue;
         var img_name = projects[i].getElementsByTagName("img")[0].childNodes[0].nodeValue;
 
         a.href = link;
         a.target = "_blank";
-        a.appendChild(text);
+        a.appendChild(name);
         img.src = "/resources/" + img_name;
+
         td_name.appendChild(a);
         td_img.appendChild(img);
         tr.appendChild(td_name);

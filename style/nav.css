@@ -16,7 +16,7 @@ nav a
     padding: .85em .9em;
     color: #EEEEEE;
     font-family: "GeosansItalic";
-    font-size: 1.1em;
+    font-size: 18px;
     text-decoration: none;
 }
 
@@ -52,7 +52,6 @@ nav ul li
     float: left;
     text-align: center;
     font-weight: bold;
-    font-size: 1em;
     line-height: 1em;
 }
 
