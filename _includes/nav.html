@@ -7,7 +7,11 @@
             </ul>
         </li>
         <li><a href="/projects">Projects</a>
-            <ul id="nav-projects"></ul>
+            <ul id="nav-projects">
+                {% for project in site.data.projects %}
+                <li><a href="{{ project.link }}" target="_blank">{{ project.name }}</a></li>
+                {% endfor %}
+            </ul>
         </li>
         <li><a href="/contact">Contact</a></li>
     </ul>

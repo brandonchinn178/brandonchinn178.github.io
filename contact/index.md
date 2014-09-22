@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Contact
-style: contact.css
 ---
 
 <table>

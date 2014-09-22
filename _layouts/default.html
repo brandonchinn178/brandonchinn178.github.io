@@ -6,11 +6,11 @@
         <title> Brandon Chinn - {{ page.title }} </title>
         <link rel="stylesheet" href="/style/style.css" />
         <link rel="stylesheet" href="/style/nav.css" />
-        {% if page.style %}<link rel="stylesheet" href="/style/{{ page.style }}" />{% endif %}
+        {% if site.data.styles contains page.title %}
+            <link rel="stylesheet" href="/style/{{ site.data.styles[page.title] }}" />
+        {% endif %}
         <link rel="shortcut icon" href="/resources/BC.ico" />
         <script src="/resources/jquery.js"></script>
-        <script src="/scripts/nav-projects.js"></script>
-        {% if page.script %}<script src="/scripts/{{ page.script }}"></script>{% endif %}
     </head>
 
     <body>

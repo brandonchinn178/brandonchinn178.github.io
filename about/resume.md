@@ -1,8 +1,6 @@
 ---
 layout: default
 title: Resume
-style: resume.css
-script: classes.js
 ---
 
 R&eacute;sum&eacute;
@@ -27,9 +25,43 @@ Intended Computer Science Major, GPA: 3.72
         <td><b>Current Courses:</b></td>
         <td><b>Past Courses:</b></td>
     </tr>
-    <tr id="courses"></tr>
+    <tr id="courses">
+        <td rowspan="2">
+            {% assign currsemester = site.data.classes.last %}
+            {{ currsemester.title }}
+            <ul>
+                {% for class in currsemester.classes %}
+                    <li>{{ class.name }} [{{ class.id }}]
+                        {% if class.note %} >> {{ class.note }} {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            {% for semester in site.data.classes %}
+                {% if forloop.last %}
+                    {% break %}
+                {% endif %}
+                {{ semester.title }}
+                <ul>
+                    {% for class in semester.classes %}
+                        {% if class.highlight %}
+                            <li>
+                        {% else %}
+                            <li class="hidable" style="display:none;">
+                        {% endif %}
+                        {{ class.name }} [{{ class.id }}]
+                        {% if class.note %} >> {{ class.note }} {% endif %}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </td>
+    </tr>
     <tr>
-        <td><b><a href="#" onclick="return filter(true);">show all</a> &middot; <a href="#" onclick="return filter(false);">hide</a></b></td>
+        <td><b>
+            <a href="#" onclick="$('.hidable').show(); return false;">show all</a> &middot; 
+            <a href="#" onclick="$('.hidable').hide(); return false;">hide</a>
+        </b></td>
     </tr>
 </table>
 

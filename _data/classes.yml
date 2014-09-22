@@ -1,0 +1,49 @@
+- title: Fall 2013
+  classes:
+    - name: Structure and Interpretation of Computer Programs
+      id: CS 61A
+      note: Python, Scheme
+      highlight: Yes
+
+    - name: Linear Algebra and Differential Equations
+      id: Math 54
+      highlight: Yes
+
+    - name: Physics for Scientists and Engineers
+      id: Physics 7A
+      note: Kinematics and Waves
+
+    - name: Elementary Korean
+      id: Korean 1A
+
+- title: Spring 2014
+  classes:
+    - name: Data Structures
+      id: CS 61B
+      note: Java
+      highlight: Yes
+
+    - name: Multivariable Calculus
+      id: Math 53
+
+    - name: Elementary Korean
+      id: Korean 1B
+
+- title: Fall 2014
+  classes:
+    - name: Machine Structures
+      id: CS 61C
+      note: C, MIPS/Assembly
+      highlight: Yes
+
+    - name: Intro to Microelectronic Circuits
+      id: EE 40
+      highlight: Yes
+
+    - name: Integrated K-8 Science and Math Teaching
+      id: UGIS 82
+      note: Cal Teach
+
+    - name: Physics for Scientists and Engineers
+      id: Physics 7B
+      note: Thermodynamics, Electromagnetism
