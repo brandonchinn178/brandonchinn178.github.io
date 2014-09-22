@@ -70,7 +70,7 @@ GPA: 4.18
 
 ## Work Experience ##
 
-### <a href="http://leapyearinnovations.com" target="_blank">LeapYear Innovations</a> &mdash; _Software Developer_, 2014 &ndash; present ###
+### <a href="http://leapyearinnovations.com" target="_blank">LeapYear Innovations</a> &mdash; _Independent Contractor_, 2014 &ndash; present ###
 * Implemented an application for Coca-Cola using Python and the Tkinter package
 * Wrote the specification sheets and usage guide for the application
 * Skills: Working within a hierarchy, clear communication with management and team, and independence and initiative
