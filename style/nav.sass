@@ -1,0 +1,75 @@
+---
+# Style for navigation bar
+---
+
+@import 'fonts', 'colors'
+
+nav
+    margin: 0
+    margin-right: 1em
+    padding: 0
+    position: relative
+    margin-top: -100px
+    float: right
+
+    a
+        display: block
+        padding: .85em .9em
+        color: #EEE
+        font: bold italic 18px "Geosans"
+        text-decoration: none
+        
+        &:hover
+            color: #EEE
+
+    ul
+        box-shadow: -3px 3px 3px rgba(0,0,0,.2)
+        background-color: $blue
+        $gradient: bottom, #6FA1D4 0%, $blue 100%
+        background: -webkit-linear-gradient($gradient)
+        background: -moz-linear-gradient($gradient)
+        background: linear-gradient(to $gradient)
+        border-radius: 5px
+        margin: 0
+        padding: 0 20px
+        position: relative
+        display: inline-table
+        list-style: none
+
+        &:after
+            content: ""
+            clear: both
+            display: block
+
+        li
+            float: left
+            text-align: center
+            font-weight: bold
+            line-height: 1em
+
+            &:hover
+                background-color: $dark-blue
+
+                & > ul
+                    display: block
+
+            ul
+                display: none
+                position: absolute
+                border-radius: 0
+                padding: 0
+                top: 100%
+
+                a
+                    padding: .5em 1.5em
+
+                li
+                    position: relative
+                    float: none
+                    $border: 1px solid #9496A0
+                    border-top: $border
+                    border-bottom: $border
+                    background-color: $dark-blue
+
+                    &:hover
+                        background: $blue

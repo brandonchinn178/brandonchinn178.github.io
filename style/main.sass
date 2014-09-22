@@ -1,0 +1,147 @@
+---
+# Main styling
+---
+
+@import 'fonts', 'colors'
+
+html
+    background-color: $background
+    margin: 0
+    padding: 0
+
+body
+    margin: 50px auto
+    width: 75%
+    min-width: 700px
+    padding: 0 40px
+
+h1
+    margin: 1em 0 .1em
+    padding: 0
+    line-height: 1em
+    color: $dark-blue
+    font: bold italic 35px "Geosans"
+    border-bottom: 2px solid $dark-blue
+
+h2
+    margin: 1em 0 .1em
+    padding: 0
+    line-height: 1em
+    color: $dark-blue
+    font: bold 30px "Geosans"
+    border-bottom: 1px solid $dark-blue
+
+h3
+    margin: .2em 0
+    color: $blue
+    font: 25px "Geosans"
+
+p
+    margin: 0
+    padding: 0
+    color: $blue
+    font: 22px "Geosans"
+
+a
+    color: $gray
+    font: "Geosans"
+    font-style: italic
+    font-weight: bold
+    text-decoration: none
+
+    &:hover
+        color: #EEE
+
+ul
+    margin: 0 2em
+    padding: 0
+
+    li
+        font: 20px "Geosans"
+        color: $blue
+        line-height: 1.4em
+
+table
+    font-family: "Geosans"
+    color: $blue
+
+img
+    padding: 0
+    margin: 0
+
+header
+    position: relative
+    margin-bottom: 80px
+    height: 200px
+    width: 100%
+
+    border-top: 5px groove rgba(76,126,177,.7)
+    border-bottom: 5px ridge rgba(76,126,177,.7)
+
+    $gradient: right, #93A2AE 0%, #C9DEEE 10%, #C9DEEE 90%, #93A2AE 100%
+    background: -moz-linear-gradient($gradient)
+    background: -webkit-linear-gradient($gradient)
+    background: linear-gradient(to $gradient)
+    font-size: 30px
+    cursor: default
+
+    table
+        margin: 0
+        width: 100%
+        height: 100%
+
+    td:first-child
+        padding-right: 20px
+        text-align: right
+        vertical-align: middle
+        font-style: italic
+
+    h1
+        font: 55px "Geosans"
+        margin: 0
+        color: $blue
+        line-height: .5em
+        font-style: initial
+        border-bottom: none
+
+    #portrait
+        position: relative
+        top: -10px
+        background: #EEE
+        border-radius: 20px/60px
+        height: 172px
+        width: 125px
+
+        img
+            position: relative
+            height: 99%
+            left: 12px
+            top: 12px
+            border-radius: 20px/60px
+            box-shadow: -5px -5px 3px #B0B0B0
+
+#main
+    margin: 0
+    padding: 0
+
+footer
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100%
+    margin: 0
+    padding: .5em
+    background-color: rgba(148,181,194,.7)
+    text-align: center
+    font: 20px "Geosans"
+    color: #EEE
+    cursor: default
+
+    *
+        color: #EEE
+
+    a:hover
+        color: $blue
+
+    span
+        margin: 0 1em
