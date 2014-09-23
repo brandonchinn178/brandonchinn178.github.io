@@ -4,7 +4,7 @@
 
 @import 'fonts', 'colors'
 
-html
+html, #main
     background-color: $background
     margin: 0
     padding: 0
@@ -82,47 +82,43 @@ header
     background: -moz-linear-gradient($gradient)
     background: -webkit-linear-gradient($gradient)
     background: linear-gradient(to $gradient)
-    font-size: 30px
     cursor: default
 
-    table
-        margin: 0
-        width: 100%
+    div
+        display: inline-block
         height: 100%
 
-    td:first-child
-        padding-right: 20px
-        text-align: right
-        vertical-align: middle
-        font-style: italic
+        &.text
+            padding-right: 20px
+            margin-left: 370px
+            text-align: right
+            vertical-align: middle
+            font: italic 30px "Geosans"
+            color: $blue
 
-    h1
-        font: 55px "Geosans"
-        margin: 0
-        color: $blue
-        line-height: .5em
-        font-style: initial
-        border-bottom: none
+            h1
+                font: 55px "Geosans"
+                margin: 0
+                color: $blue
+                line-height: .5em
+                font-style: initial
+                border-bottom: none
 
-    #portrait
-        position: relative
-        top: -10px
-        background: #EEE
-        border-radius: 20px/60px
-        height: 172px
-        width: 125px
-
-        img
+        &.portrait
             position: relative
-            height: 99%
-            left: 12px
-            top: 12px
+            top: 5px
+            background: #EEE
             border-radius: 20px/60px
-            box-shadow: -5px -5px 3px #B0B0B0
+            height: 172px
+            width: 125px
 
-#main
-    margin: 0
-    padding: 0
+            img
+                position: relative
+                height: 99%
+                left: 12px
+                top: 12px
+                border-radius: 20px/60px
+                box-shadow: -5px -5px 3px #B0B0B0
 
 footer
     position: fixed
