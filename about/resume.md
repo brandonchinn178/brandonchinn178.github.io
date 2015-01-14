@@ -18,7 +18,7 @@ JQuery, Django, MySQL
 ## Education ##
 
 ### University of California, Berkeley, 2013 &ndash; present ###
-Intended Computer Science Major, GPA: 3.72
+Intended Computer Science Major, GPA: 3.755
 
 <table>
     <tr>

@@ -47,3 +47,19 @@
     - name: Physics for Scientists and Engineers
       id: Physics 7B
       note: Thermodynamics, Electromagnetism
+
+- title: Spring 2015
+  classes:
+    - name: Discrete Mathematics
+      id: CS 70
+      highlight: Yes
+
+    - name: Intro to Artificial Intelligence
+      id: CS 188
+      highlight: Yes
+
+    - name: Knowing and Learning in Math and Science
+      id: EDUC 130
+
+    - name: Language and Linguisitics
+      id: LING 5
