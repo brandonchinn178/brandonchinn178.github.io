@@ -1,0 +1,174 @@
+---
+# Main style
+---
+
+@import 'colors', 'fonts';
+
+@mixin vertical-align {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin blur($amount) {
+    -webkit-filter: blur($amount);
+    filter: blur($amount);
+}
+
+@mixin transition {
+    -webkit-transition: 0.5s, width 1s, height 1s;
+    transition: 0.5s, width 1s, height 1s;
+}
+
+@mixin hide {
+    opacity: 0;
+}
+
+@mixin show {
+    opacity: 1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    @include transition;
+    &:before {
+        @include transition;
+    }
+}
+
+body {
+    font-family: "Amble", "Helvetica Neue", Helvetica, sans-serif;
+    background: black;
+    color: white;
+}
+
+h1, h2 {
+    font-family: "Vera", "Arial", sans-serif;
+    font-weight: normal;
+}
+
+a {
+    color: white;
+}
+
+.header {
+    @include vertical-align;
+    z-index: 100;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    cursor: default;
+}
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+    .row {
+        display: block;
+    }
+    .section {
+        display: inline-block;
+        position: relative;
+        width: 50%;
+        height: 50%;
+        vertical-align: bottom;
+        font-size: 16px;
+        overflow: hidden;
+        .titles, &:before {
+            @include vertical-align;
+            @include hide;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 36px;
+            text-align: center;
+            width: 100%;
+        }
+        &:hover {
+            h2 {
+                @include show;
+            }
+            &:before {
+                @include blur(5px);
+            }
+        }
+        &:before {
+            @include show;
+            @include blur(1px);
+            cursor: auto;
+            font: 160px "icomoon";
+            color: #444;
+            position: absolute;
+        }
+        &.about:before {
+            content: '\ea0c';
+        }
+        &.resume:before {
+            content: '\e923';
+        }
+        &.projects:before {
+            content: '\ea81';
+        }
+        &.contact:before {
+            content: '\e96f';
+        }
+
+        .content {
+            @include hide;
+            padding: 5px 25px;
+            h1 {
+                text-align: center;
+                font-size: 28px;
+                margin: 10px 0;
+            }
+            .back {
+                margin-top: 10px;
+                text-align: center;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// Dealing with active states
+.wrapper .section {
+    &.active {
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        &:before, .titles {
+            @include hide;
+            z-index: -100;
+        }
+        .content {
+            @include show;
+            line-height: 1.5em;
+            .back {
+                cursor: pointer;
+            }
+        }
+    }
+    &.hide {
+        @include hide;
+        width: 0;
+        height: 0;
+    }
+}
+
+// Individual sections
+.wrapper .section {
+    &.projects {
+        p {
+            display: inline-block;
+            text-align: center;
+            img {
+                display: block;
+                width: 50%;
+                margin: 0 auto;
+            }
+        }
+    }
+}

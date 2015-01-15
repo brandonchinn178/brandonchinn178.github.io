@@ -1,0 +1,53 @@
+---
+---
+
+{% capture about %}{% include about.md %}{% endcapture %}
+{% capture resume %}{% include resume.md %}{% endcapture %}
+{% capture projects %}{% include projects.md %}{% endcapture %}
+{% capture contact %}{% include contact.md %}{% endcapture %}
+
+<html>
+<head>
+    <title>Brandon Chinnnnnnnnn...</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style.css" />
+    <link rel="icon" type="image/png" href="/resources/img/favicon.png" />
+    <script src="/resources/jquery.js"></script>
+    <script src="/resources/script.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Brandon Chinn</h1>
+            <span>Learning, Doing, and Teaching</span>
+        </div>
+        <div class="row">
+            <div class="section about">
+                <h2 class="titles" data-name="about">About</h2>
+                <div class="content blur">
+                    {{ about|markdownify }}
+                </div>
+            </div>
+            <div class="section resume">
+                <h2 class="titles" data-name="resume">Resume</h2>
+                <div class="content blur">
+                    {{ resume|markdownify }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="section projects">
+                <h2 class="titles" data-name="projects">Projects</h2>
+                <div class="content blur">
+                    {{ projects|markdownify }}
+                </div>
+            </div>
+            <div class="section contact">
+                <h2 class="titles" data-name="contact">Contact</h2>
+                <div class="content blur">
+                    {{ contact|markdownify }}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

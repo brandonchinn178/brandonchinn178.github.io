@@ -1,65 +1,68 @@
-- title: Fall 2013
-  classes:
-    - name: Structure and Interpretation of Computer Programs
-      id: CS 61A
-      note: Python, Scheme
-      highlight: Yes
+gpa: 3.755
 
-    - name: Linear Algebra and Differential Equations
-      id: Math 54
-      highlight: Yes
+schedule:
+  - title: Fall 2013
+    classes:
+      - name: Structure and Interpretation of Computer Programs
+        id: CS 61A
+        note: Python, Scheme
+        highlight: Yes
 
-    - name: Physics for Scientists and Engineers
-      id: Physics 7A
-      note: Kinematics and Waves
+      - name: Linear Algebra and Differential Equations
+        id: Math 54
+        highlight: Yes
 
-    - name: Elementary Korean
-      id: Korean 1A
+      - name: Physics for Scientists and Engineers
+        id: Physics 7A
+        note: Kinematics and Waves
 
-- title: Spring 2014
-  classes:
-    - name: Data Structures
-      id: CS 61B
-      note: Java
-      highlight: Yes
+      - name: Elementary Korean
+        id: Korean 1A
 
-    - name: Multivariable Calculus
-      id: Math 53
+  - title: Spring 2014
+    classes:
+      - name: Data Structures
+        id: CS 61B
+        note: Java
+        highlight: Yes
 
-    - name: Elementary Korean
-      id: Korean 1B
+      - name: Multivariable Calculus
+        id: Math 53
 
-- title: Fall 2014
-  classes:
-    - name: Machine Structures
-      id: CS 61C
-      note: C, MIPS/Assembly
-      highlight: Yes
+      - name: Elementary Korean
+        id: Korean 1B
 
-    - name: Intro to Microelectronic Circuits
-      id: EE 40
-      highlight: Yes
+  - title: Fall 2014
+    classes:
+      - name: Machine Structures
+        id: CS 61C
+        note: C, MIPS/Assembly
+        highlight: Yes
 
-    - name: Integrated K-8 Science and Math Teaching
-      id: UGIS 82
-      note: Cal Teach
+      - name: Intro to Microelectronic Circuits
+        id: EE 40
+        highlight: Yes
 
-    - name: Physics for Scientists and Engineers
-      id: Physics 7B
-      note: Thermodynamics, Electromagnetism
+      - name: Integrated K-8 Science and Math Teaching
+        id: UGIS 82
+        note: Cal Teach
 
-- title: Spring 2015
-  classes:
-    - name: Discrete Mathematics
-      id: CS 70
-      highlight: Yes
+      - name: Physics for Scientists and Engineers
+        id: Physics 7B
+        note: Thermodynamics, Electromagnetism
 
-    - name: Intro to Artificial Intelligence
-      id: CS 188
-      highlight: Yes
+  - title: Spring 2015
+    classes:
+      - name: Discrete Mathematics
+        id: CS 70
+        highlight: Yes
 
-    - name: Knowing and Learning in Math and Science
-      id: EDUC 130
+      - name: Intro to Artificial Intelligence
+        id: CS 188
+        highlight: Yes
 
-    - name: Language and Linguisitics
-      id: LING 5
+      - name: Knowing and Learning in Math and Science
+        id: EDUC 130
+
+      - name: Language and Linguisitics
+        id: LING 5
