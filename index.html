@@ -3,7 +3,6 @@
 
 {% capture about %}{% include about.md %}{% endcapture %}
 {% capture resume %}{% include resume.md %}{% endcapture %}
-{% capture contact %}{% include contact.md %}{% endcapture %}
 
 <html>
 <head>
@@ -15,38 +14,39 @@
 </head>
 <body>
     <div class="wrapper">
+        <!-- Home -->
         <div class="header">
             <h1>Brandon Chinn</h1>
             <span>Learning, Doing, and Teaching</span>
         </div>
         <div class="row">
             <div class="section about">
-                <h2 class="titles" data-name="about">About</h2>
-                <div class="content blur">
-                    {{ about|markdownify }}
-                </div>
+                <h2 class="titles">About</h2>
             </div>
             <div class="section resume">
-                <h2 class="titles" data-name="resume">Resume</h2>
-                <div class="content blur">
-                    {{ resume|markdownify }}
-                </div>
+                <h2 class="titles">Resume</h2>
             </div>
         </div>
         <div class="row">
             <div class="section projects">
-                <h2 class="titles" data-name="projects">Projects</h2>
-                <div class="content blur">
-                    {% include projects.html %}
-                </div>
+                <h2 class="titles">Projects</h2>
             </div>
             <div class="section contact">
-                <h2 class="titles" data-name="contact">Contact</h2>
-                <div class="content blur">
-                    {{ contact|markdownify }}
-                </div>
+                <h2 class="titles">Contact</h2>
             </div>
         </div>
+
+        <!-- About -->
+        <div class="content about">{{ about|markdownify }}</div>
+
+        <!-- Resume -->
+        <div class="content resume">{{ resume|markdownify }}</div>
+
+        <!-- Projects -->
+        <div class="content projects">{% include projects.html %}</div>
+
+        <!-- Contact -->
+        <div class="content contact">{% include contact.html %}</div>
     </div>
 </body>
 </html>

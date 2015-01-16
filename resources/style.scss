@@ -2,7 +2,7 @@
 # Main style
 ---
 
-@import 'colors', 'fonts';
+@import 'fonts';
 
 @mixin vertical-align {
     position: absolute;
@@ -21,21 +21,15 @@
     transition: 0.5s, width 1s, height 1s;
 }
 
-@mixin hide {
-    opacity: 0;
-}
-
-@mixin show {
-    opacity: 1;
+@mixin fade {
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
 * {
     margin: 0;
     padding: 0;
-    @include transition;
-    &:before {
-        @include transition;
-    }
 }
 
 body {
@@ -50,10 +44,14 @@ h1, h2 {
 }
 
 a {
+    @include transition;
+    @include fade;
     color: white;
+    cursor: pointer;
 }
 
 .header {
+    @include transition;
     @include vertical-align;
     z-index: 100;
     width: 100%;
@@ -67,111 +65,145 @@ a {
     width: 100%;
     height: 100%;
     font-size: 0;
-    .row {
-        display: block;
+}
+
+// Home page
+.section {
+    @include transition;
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    height: 50%;
+    .titles, &:before {
+        @include transition;
+        @include vertical-align;
+        z-index: 1;
+        font-size: 36px;
+        text-align: center;
+        width: 100%;
     }
-    .section {
-        display: inline-block;
-        position: relative;
-        width: 50%;
-        height: 50%;
-        vertical-align: bottom;
-        font-size: 16px;
-        overflow: hidden;
-        .titles, &:before {
-            @include vertical-align;
-            @include hide;
-            cursor: pointer;
-            z-index: 1;
-            font-size: 36px;
-            text-align: center;
-            width: 100%;
-        }
-        &:hover {
-            h2 {
-                @include show;
-            }
-            &:before {
-                @include blur(5px);
-            }
+    .titles {
+        opacity: 0;
+        cursor: pointer;
+    }
+    &:before {
+        @include blur(1px);
+        font: 160px "icomoon";
+        color: #444;
+        position: absolute;
+    }
+
+    // background icons
+    &.about:before {
+        content: '\ea0c';
+    }
+    &.resume:before {
+        content: '\e923';
+    }
+    &.projects:before {
+        content: '\ea81';
+    }
+    &.contact:before {
+        content: '\e96f';
+    }
+
+    &:hover {
+        .titles {
+            @include fade;
+            opacity: 1;
         }
         &:before {
-            @include show;
-            @include blur(1px);
-            cursor: auto;
-            font: 160px "icomoon";
-            color: #444;
-            position: absolute;
-        }
-        &.about:before {
-            content: '\ea0c';
-        }
-        &.resume:before {
-            content: '\e923';
-        }
-        &.projects:before {
-            content: '\ea81';
-        }
-        &.contact:before {
-            content: '\e96f';
-        }
-
-        .content {
-            @include hide;
-            display: none;
-            padding: 5px 25px;
-            h1 {
-                text-align: center;
-                font-size: 28px;
-                margin: 10px 0;
-            }
-            .back {
-                width: 100px;
-                margin: 10px auto;
-                text-align: center;
-                text-decoration: underline;
-            }
+            @include blur(5px);
         }
     }
-}
 
-// Dealing with active states
-.wrapper .section {
-    &.active {
-        width: calc(100% - 40px);
-        height: 100%;
-        padding: 0 20px;
-        overflow: scroll;
-        &:before, .titles {
-            @include hide;
-            z-index: -100;
-        }
-        .content {
-            @include show;
-            display: initial;
-            line-height: 1.5em;
-            .back {
-                cursor: pointer;
-            }
-        }
-    }
+    // When a page is up
     &.hide {
-        @include hide;
-        width: 0;
-        height: 0;
+        .titles {
+            display: none;
+        }
+        &:before {
+            opacity: 0;
+        }
     }
 }
 
-// Individual sections
-.wrapper .section {
-    &.projects {
-        .project {
-            min-height: 175px;
-            margin: 10px 0;
-            img {
-                float: left;
-                width: 300px;
-                margin: 0 10px;
+// All pages
+.content {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px 25px;
+    font-size: 16px;
+    * {
+        line-height: 1.5em;
+    }
+    h1 {
+        text-align: center;
+        font-size: 28px;
+    }
+    .back {
+        display: block;
+        width: 100px;
+        margin: 30px auto 10px;
+        text-align: center;
+    }
+}
+
+.content.resume {
+    h2 {
+        margin-top: 20px;
+    }
+    h3 {
+        margin-top: 10px;
+    }
+    p {
+        margin-left: 10px;
+        & + ul {
+            margin-left: 40px;
+        }
+    }
+    ul {
+        margin-left: 25px;
+    }
+}
+
+.content.projects {
+    .project {
+        min-height: 175px;
+        margin: 10px 0;
+        img {
+            float: left;
+            width: 300px;
+            margin: 0 10px;
+        }
+    }
+}
+
+.content.contact {
+    p {
+        margin: 20px 0;
+        font-size: 16px;
+        text-align: center;
+        a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 32px;
+            line-height: 1em;
+            &:before {
+                font-family: "icomoon";
+            }
+            &.email:before {
+                content: "\ea84";
+            }
+            &.github:before {
+                content: "\eab5";
+            }
+            &.linkedin:before {
+                content: "\eac8";
             }
         }
     }
