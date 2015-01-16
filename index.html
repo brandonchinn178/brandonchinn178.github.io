@@ -3,7 +3,6 @@
 
 {% capture about %}{% include about.md %}{% endcapture %}
 {% capture resume %}{% include resume.md %}{% endcapture %}
-{% capture projects %}{% include projects.md %}{% endcapture %}
 {% capture contact %}{% include contact.md %}{% endcapture %}
 
 <html>
@@ -38,7 +37,7 @@
             <div class="section projects">
                 <h2 class="titles" data-name="projects">Projects</h2>
                 <div class="content blur">
-                    {{ projects|markdownify }}
+                    {% include projects.html %}
                 </div>
             </div>
             <div class="section contact">

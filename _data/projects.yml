@@ -1,15 +1,19 @@
 - name: Calchart Viewer
   link: http://calband.github.io/calchart-viewer
   img: screenshot_calchart.png
+  summary: "A Javascript-based web application that helps the Cal Marching Band learn their weekly shows. Behavior is completely frontend, but allows retrieval from a server containing all of our shows in JSON format. Features include animating the show with music and generating a PDF printout of a selected dot's show."
 
 - name: Worship Database
   link: http://worshipdatabase.info
   img: screenshot_worship.png
+  summary: "A personal project that compiles a database of Christian worship songs. Songs can be sorted, viewed, and downloaded, which assists worship leaders in choosing song sets for worship. Runs on the Django web framework, also utilizing MySQL and jQuery. Features include filtering songs by their tags and an app assisting the transposition of song keys."
 
 - name: Got Calcium?
   link: http://brandonchinn178.github.io/calcium
   img: screenshot_calcium.png
+  summary: "A simple, frontend website built with a group of friends for a hackathon project. Built for the American Bone Health organization in order to spread awareness about calcium intake in the diet, the site includes an interactive calculator measuring calcium in one's diet."
 
 - name: Binary Numbers
   link: http://brandonchinn178.github.io/binary
   img: screenshot_binary.png
+  summary: "A quick site I built for a student in a class I was teacher-assisting. One of my first websites, it teaches how basic binary numbers work, through toggling the digits of a number. The student asked how the binary system worked, so I quickly wrote this up as a way to introduce him to the system"
