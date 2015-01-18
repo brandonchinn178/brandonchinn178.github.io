@@ -74,6 +74,7 @@ a {
     display: inline-block;
     width: 50%;
     height: 50%;
+    overflow: hidden;
     .titles, &:before {
         @include transition;
         @include vertical-align;
