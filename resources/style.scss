@@ -27,6 +27,12 @@
     }
 }
 
+@mixin mobile {
+    @media (max-width: 500px), (max-height: 500px) {
+        @content;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -43,6 +49,20 @@ h1, h2 {
     font-weight: normal;
 }
 
+h1 {
+    font-size: 56px;
+    @include mobile {
+        font-size: 40px;
+    }
+}
+
+h2 {
+    font-size: 40px;
+    @include mobile {
+        font-size: 30px;
+    }
+}
+
 a {
     @include transition;
     @include fade;
@@ -56,8 +76,13 @@ a {
     z-index: 100;
     width: 100%;
     text-align: center;
-    font-size: 24px;
     cursor: default;
+    span {
+        font-size: 24px;
+        @include mobile {
+            font-size: 20px;
+        }
+    }
 }
 
 .wrapper {
@@ -79,19 +104,26 @@ a {
         @include transition;
         @include vertical-align;
         z-index: 1;
-        font-size: 36px;
         text-align: center;
         width: 100%;
     }
     .titles {
+        font-size: 36px;
         opacity: 0;
         cursor: pointer;
+        @include mobile {
+            font-size: 30px;
+            opacity: 1;
+        }
     }
     &:before {
         @include blur(1px);
         font: 160px "icomoon";
         color: #444;
         position: absolute;
+        @include mobile {
+            font-size: 80px;
+        }
     }
 
     // background icons
@@ -146,6 +178,9 @@ a {
         text-align: center;
         font-size: 28px;
     }
+    h2 {
+        font-size: 24px;
+    }
     .back {
         display: block;
         width: 100px;
@@ -180,6 +215,11 @@ a {
             float: left;
             width: 300px;
             margin: 0 10px;
+            @include mobile {
+                float: none;
+                width: 100%;
+                margin: 0;
+            }
         }
     }
 }

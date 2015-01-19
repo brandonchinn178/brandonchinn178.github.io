@@ -59,6 +59,7 @@ toHome = ->
 
 animateSection = (name) ->
     $(".header").css
+        zIndex: -100
         opacity: 0
     $(".section").addClass "hide"
     currScreen = $(".section.#{name}").expand()
