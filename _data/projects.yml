@@ -1,0 +1,19 @@
+- name: Worship Database
+  link: http://worshipdatabase.info
+  img: screenshot_worship.png
+  summary: "A personal project that compiles a database of Christian worship songs. Songs can be sorted, viewed, and downloaded, which assists worship leaders in choosing song sets for worship. Runs on the Django web framework, also utilizing MySQL and jQuery. Features include filtering songs by their tags and an app assisting the transposition of song keys."
+
+- name: Cal Band Website
+  link: http://calband.berkeley.edu
+  img: screenshot_calband.png
+  summary: "The website of the University of California Marching Band built on Wordpress. Designed by the Cal Band Design group, I led the implementation of the Wordpress template using PHP files, CSS formatting, and Javascript animations."
+
+- name: Calchart Viewer
+  link: http://calband.github.io/calchart-viewer
+  img: screenshot_calchart.png
+  summary: "A Javascript-based web application that helps the Cal Marching Band learn their weekly shows. Behavior is completely frontend, but allows retrieval from a server containing all of our shows in JSON format. Features include animating the show with music and generating a PDF printout of a selected dot's show."
+
+- name: Dr. Sungae Lee Professional Website
+  link: http://sungaelee.com
+  img: screenshot_sungaelee.png
+  summary: "The professional website for Dr. Sungae Lee, built on Wordpress. Features include a page listing all of her upcoming events and a page listing all of her Youtube lectures. I designed the website and implemented all of the functionality through Wordpress and PHP."

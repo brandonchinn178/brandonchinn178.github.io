@@ -1,0 +1,25 @@
+# Quick Facts section on the About page
+
+- label: Major
+  content: Computer Science
+
+- label: Interests
+  content: Software development, web development, education
+
+- label: Organizations
+  content: Cal Band, Livingwater Church
+
+- label: Instruments
+  content: Guitar, Trombone, Piano, Bass, Percussion
+
+- label: Myers-Briggs
+  content: ISTJ
+
+- label: Favorite Color
+  content: Blue
+
+- label: Favorite Food
+  content: Spaghetti, Sandwiches, Soft Tofu Stew
+
+- label: Favorite Shows
+  content: Doctor Who, Sherlock, Agents of S.H.I.E.L.D., How I Met Your Mother

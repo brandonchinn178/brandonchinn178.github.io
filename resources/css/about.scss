@@ -1,0 +1,21 @@
+---
+---
+
+.content {
+    .headshot {
+        height: 300px;
+        float: right;
+        margin-left: 20px;
+    }
+    h2 {
+        margin-top: 15px;
+    }
+    .quick-facts {
+        p {
+            margin: 5px 0;
+        }
+        .label {
+            font-weight: bold;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+---
+---
+
+.project {
+    td {
+        padding: 10px 0;
+        vertical-align: top;
+        &.image {
+            width: 250px;
+            img {
+                width: 100%;
+            }
+        }
+        &.info {
+            padding-left: 10px;
+            h2 {
+                margin-bottom: 5px;
+                font-weight: normal;
+            }
+        }
+    }
+}

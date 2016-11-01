@@ -1,0 +1,18 @@
+---
+title: About
+style: about.css
+---
+
+{% include header.html %}
+
+<img class="headshot" src="/resources/img/headshot.jpg">
+<p>Hello! My name is Brandon, and I'm originally from Irvine, CA, but I'm currently studying at UC Berkeley, where I pursue Computer Science and Education. I hope to bring my passion for learning, coding, and teaching wherever I am, to everyone around me. I also hope to develop some cool stuff along the way. I am an active member in the <a href="http://calband.berkeley.edu">Cal Marching Band</a> and in the <a href="http://lw.church">Livingwater Church at Berkeley</a>.</p>
+
+<h2>Quick Facts</h2>
+<div class="quick-facts">
+    {% for fact in site.data.quick_facts %}
+        <p><span class="label">{{ fact.label }}</span>: {{ fact.content }}</p>
+    {% endfor %}
+</div>
+
+{% include footer.html %}

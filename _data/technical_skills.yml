@@ -1,0 +1,24 @@
+- name: Proficient
+  languages:
+    - Python
+    - Haskell
+    - Java
+    - HTML
+    - CSS
+    - Javascript
+    - SQL
+    - bash
+  libraries:
+    - Django
+    - jQuery
+    - Sass
+    - git
+
+- name: Familiar
+  languages:
+    - C
+    - Rust
+    - PHP
+  libraries:
+    - Wordpress
+    - D3.js
