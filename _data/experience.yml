@@ -1,19 +1,19 @@
-- label: LeapYear Technologies
-  link: http://leapyear.io
-  start: 2014
-  end: present
-  details:
-    - Developed an optimization algorithm for Coca-Cola, working with Python and the Tkinter GUI toolkit
-    - Currently working in Haskell to build a SQL server that returns answers to database queries that provide proven assurances of privacy and security
-    - Developing a web interface and API system using Django that communicates with the server to run administrative tasks
-
 - label: Cal Band Computer Committee
   link: http://github.com/calband
   start: 2014
   end: present
   details:
     - The technology division of the University of California Marching Band that develops and manages the band's public websites, and the applications used for creating and viewing the weekly halftime show. (More details in the projects page)
-    - Renovated the members website used for internal communications within the band, using the Django framework.
+    - Renovated the members portal used for internal communications within the band, using the Django framework.
+
+- label: LeapYear Technologies
+  link: http://leapyear.io
+  start: 2014
+  end: 2016
+  details:
+    - Developed an optimization algorithm for Coca-Cola, working with Python and the Tkinter GUI toolkit
+    - Used Haskell to build a database server that returns answers to database queries which provide proven assurances of privacy and security
+    - Developed a web interface and API system using Django that communicates with the database server to run administrative tasks
 
 - label: Private Tutor
   link:

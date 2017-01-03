@@ -6,24 +6,24 @@
         - Initiate and delegate projects for the band
     - name: "Presence Fellowship: Worship Director"
       details:
-        - Prepare song sets, manage worship team, communicate with co-directors, and maintain musicianship
+        - Manage worship team, communicate with co-directors, and maintain musicianship
 
 - label: Team Player
   examples:
     - name: At Work
       details:
-        - Worked on a highly inter-dependent codebase with my teammates at LeapYear
+        - Worked on a highly inter-dependent codebase with my team at LeapYear
         - Worked with other TA’s at the Digital Media Academy, coordinating jobs during the week
     - name: At School
       details:
-        - An active member of the University of California Marching Band. Part of the trombone section, Public Relations committee, and the Computer Committee.
+        - Member of the University of California Marching Band as part of the trombone section, Public Relations committee, and the Computer Committee.
         - Developed an Android app with a team of 5 for the UI Design and Development course.
 
 - label: Driven
   examples:
     - name: To Learn
       details:
-        - Self-taught most things in "Technical Skills”
+        - Constantly looking at source code to understand how a package or library works
         - Love to find new programming languages
     - name: To Create
       details:

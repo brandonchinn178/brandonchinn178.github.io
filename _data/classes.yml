@@ -1,17 +1,14 @@
-gpa: 3.855
+gpa: 3.867
 
 schedule:
   - title: Fall 2013
     classes:
       - name: Structure and Interpretation of Computer Programs
         id: CS 61A
-
       - name: Linear Algebra and Differential Equations
         id: Math 54
-
       - name: Physics for Scientists and Engineers
         id: Physics 7A
-
       - name: Elementary Korean
         id: Korean 1A
 
@@ -19,10 +16,8 @@ schedule:
     classes:
       - name: Data Structures
         id: CS 61B
-
       - name: Multivariable Calculus
         id: Math 53
-
       - name: Elementary Korean
         id: Korean 1B
 
@@ -30,13 +25,10 @@ schedule:
     classes:
       - name: Machine Structures
         id: CS 61C
-
       - name: Intro to Microelectronic Circuits
         id: EE 40
-
       - name: Integrated K-8 Science and Math Teaching
         id: UGIS 82
-
       - name: Physics for Scientists and Engineers
         id: Physics 7B
 
@@ -44,13 +36,10 @@ schedule:
     classes:
       - name: Discrete Mathematics
         id: CS 70
-
       - name: Intro to Artificial Intelligence
         id: CS 188
-
       - name: Knowing and Learning in Math and Science
         id: EDUC 130
-
       - name: Language and Linguisitics
         id: LING 5
 
@@ -58,13 +47,10 @@ schedule:
     classes:
       - name: Database Systems
         id: CS 186
-
       - name: Efficient Algorithms and Intractable Problems
         id: CS 170
-
       - name: Classroom Interactions in Science and Mathematics
         id: EDUC 131AC
-
       - name: Introduction to Music Theory
         id: MUSIC 25A
 
@@ -72,13 +58,10 @@ schedule:
     classes:
       - name: Computer Security
         id: CS 161
-
       - name: User Interface Design and Development
         id: CS 160
-
       - name: Project-Based Instruction
         id: UGIS 187
-
       - name: Wind Ensemble
         id: MUSIC 142
 
@@ -86,9 +69,20 @@ schedule:
     classes:
       - name: Sound and Music Computing
         id: MUSIC 158A
-
       - name: Research Methods for K-12 Teachers
         id: UGIS 188
-
       - name: Introduction to Logic
         id: PHILOS 12A
+      - name: Computer Science Mentors
+        id: CS 399
+
+  - title: Spring 2017
+    classes:
+      - name: Programming Languages and Compilers
+        id: CS 164
+      - name: Social Implications of Computer Technology
+        id: CS 195
+      - name: Bioinspired Design
+        id: INTEGBI C32
+      - name: History of the Life Sciences
+        id: HISTORY 180T
