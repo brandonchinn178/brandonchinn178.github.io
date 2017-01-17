@@ -19,6 +19,8 @@
     - C
     - Rust
     - PHP
+    - Node.js
   libraries:
     - Wordpress
     - D3.js
+    - Android
