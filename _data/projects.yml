@@ -13,12 +13,12 @@
   img: screenshot_calchart.png
   summary: "A Javascript-based web application that helps the Cal Marching Band learn their weekly shows. Behavior is completely frontend, but allows retrieval from a server containing all of our shows in JSON format. Features include animating the show with music and generating a PDF printout of a selected dot's show."
 
-- name: Circle of Suck
-  link: http://circle-of-suck.com
-  img: screenshot_circlesuck.png
-  summary: "A website that scrapes college football scores from the Sportradar API and finds a \"circle of suck\", a cycle in a directed graph where each node is a school and each edge represents a game, with the loser pointing to the winner. I led the front-end design and development, along with managing and delegating the overall project. Created at Cal Hacks 2016 with a team of 5."
-
 - name: Tellefsen Hall
   link: http://tellefsenhall.org
   img: screenshot_tellefsenhall.png
   summary: "The website for the official home of the Cal Band. I designed the website and implemented all of the functionality through Wordpress and PHP."
+
+- name: Circle of Suck
+  link: http://circle-of-suck.com
+  img: screenshot_circlesuck.png
+  summary: "A website that scrapes college football scores from the Sportradar API and finds a \"circle of suck\", a cycle in a directed graph where each node is a school and each edge represents a game, with the loser pointing to the winner. I led the front-end design and development, along with managing and delegating the overall project. Created at Cal Hacks 2016 with a team of 5."
