@@ -10,13 +10,13 @@
   content: Guitar, Trombone, Piano
 
 - label: Myers-Briggs
-  content: ESFJ
+  content: ESTJ
 
 - label: Favorite Color
   content: Blue
 
-- label: Favorite Food
-  content: Spaghetti, Sandwiches, Soft Tofu Stew
+- label: Favorite Author
+  content: C.S. Lewis
 
 - label: Favorite Shows
-  content: Doctor Who, Sherlock, Agents of S.H.I.E.L.D., How I Met Your Mother
+  content: Doctor Who, Sherlock, Agents of S.H.I.E.L.D.

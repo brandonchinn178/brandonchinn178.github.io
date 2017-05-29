@@ -1,9 +1,16 @@
+- label: LeapYear Technologies
+  link: http://leapyear.io
+  start: 2017
+  end: present
+  details:
+    - Software engineer
+
 - label: Cal Band Computer Committee
   link: http://github.com/calband
   start: 2014
-  end: present
+  end: 2017
   details:
-    - The technology division of the University of California Marching Band that develops and manages the band's public websites, and the applications used for creating and viewing the weekly halftime show. (More details in the projects page)
+    - The technology division of the University of California Marching Band that develops and manages the band's public websites and the applications used for creating and viewing the weekly halftime show. (More details in the projects page)
     - Renovated the members portal used for internal communications within the band, using the Django framework.
 
 - label: LeapYear Technologies
