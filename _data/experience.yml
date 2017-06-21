@@ -15,12 +15,18 @@
 
 - label: LeapYear Technologies
   link: http://leapyear.io
-  start: 2014
+  start: 2015
   end: 2016
   details:
-    - Developed an optimization algorithm for Coca-Cola, working with Python and the Tkinter GUI toolkit
     - Used Haskell to build a database server that returns answers to database queries which provide proven assurances of privacy and security
     - Developed a web interface and API system using Django that communicates with the database server to run administrative tasks
+
+- label: Primus Systems
+  link: 
+  start: 2014
+  end: 2015
+  details:
+    - Developed an optimization algorithm for Coca-Cola, working with Python and the Tkinter GUI toolkit
 
 - label: Private Tutor
   link:
