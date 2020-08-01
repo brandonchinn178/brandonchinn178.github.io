@@ -1,0 +1,29 @@
+---
+---
+
+body {
+    padding: 20px;
+
+    width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 1em;
+    border-bottom: 1px solid black;
+
+    padding-bottom: 1em;
+}
+
+h1 {
+    margin: 0;
+
+    a {
+        text-decoration: none;
+        color: initial;
+    }
+}
+
+p {
+    line-height: 1.5em;
+}

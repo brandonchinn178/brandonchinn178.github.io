@@ -1,0 +1,24 @@
+---
+layout: blog
+title: Blog
+---
+
+{% style blog_home.css %}
+
+<p class="banner">
+    Hello, and welcome to my blog! My primary blog,
+    <a href="https://cswithbaddrawings.wordpress.com">CS With Bad Drawings</a>,
+    focuses primarily on explaining programming concepts. This blog will contain
+    miscellaneous thoughts on Haskell or other programming topics. Hope you find
+    something of interest here!
+</p>
+
+{% for post in site.posts %}
+    <article>
+        <h1><a href="{{ post.url }}">{{ post.title }}</a> <span class="date">&mdash; {{ post.date | date: "%B %e, %Y" }}</span></h1>
+        <div>
+            {{ post.excerpt }}
+        </div>
+        <a href="{{ post.url }}">Read More</a>
+    </article>
+{% endfor %}
