@@ -17,6 +17,10 @@ $black: #333;
 $header-color: $black;
 $home-button-color: $black;
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-size: 20px;
   font-family: Amble, Roboto, Arial, sans-serif;
