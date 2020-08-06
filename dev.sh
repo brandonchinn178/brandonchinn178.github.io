@@ -15,4 +15,4 @@ export GEM_PATH=~/.ruby
 export PATH="${GEM_PATH}/bin:${RUBY_PATH}:${PATH}"
 
 gem install --install-dir "${GEM_PATH}" jekyll
-jekyll serve
+jekyll serve "$@"
