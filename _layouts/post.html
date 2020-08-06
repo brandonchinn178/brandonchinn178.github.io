@@ -2,7 +2,7 @@
 layout: blog
 ---
 
-{% style post.css %}
+{% include style.html file="post.css" %}
 <article>
     <h1>{{ page.title }}</h1>
     <p class="date">{{ page.date | date: "%B %e, %Y" }}</p>
