@@ -11,8 +11,8 @@ if [[ ! -d "${RUBY_PATH}" ]]; then
     exit 1
 fi
 
-export GEM_PATH=~/.ruby
-export PATH="${GEM_PATH}/bin:${RUBY_PATH}:${PATH}"
+export GEM_HOME=~/.ruby
+export PATH="${GEM_HOME}/bin:${RUBY_PATH}:${PATH}"
 
-gem install --install-dir "${GEM_PATH}" jekyll
+bundle install
 jekyll serve "$@"
