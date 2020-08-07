@@ -3,5 +3,6 @@
 ## Run locally
 
 ```bash
-./dev.sh
+./bundle.sh install
+./bundle.sh exec jekyll serve
 ```
