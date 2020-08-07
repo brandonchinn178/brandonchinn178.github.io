@@ -1,0 +1,51 @@
+### Workflow to deploy GitHub pages.
+
+name: Deploy GitHub pages
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Install Ruby and dependencies
+      - uses: actions/setup-ruby@v1
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Bundle install
+        run: |
+          bundle config set path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      # Build
+      - name: Build site
+        run: bundle exec jekyll build
+
+      # Deploy on gh-pages
+      - name: Deploy to gh-pages
+        run: |
+          set -xu
+
+          mv ./_site ../gh-pages
+          cd ../gh-pages
+
+          git init
+          git checkout -b gh-pages
+
+          git add .
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git commit -m "Deploy ${GITHUB_SHA}"
+
+          git push --force \
+            "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}" \
+            gh-pages
