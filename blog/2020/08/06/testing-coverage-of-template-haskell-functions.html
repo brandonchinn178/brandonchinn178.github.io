@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Testing Coverage of Template Haskell functions – Brandon Chinn</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Brandon Chinn">
+    <meta name="description" content="Brandon Chinn's personal website">
+
+    <meta property="og:title" content="Brandon Chinn -- Learning, Creating, and Teaching">
+    <meta property="og:image" content="http://brandonchinn178.github.io/resources/fb-logo.png">
+    <meta property="og:description" content="Brandon Chinn's personal website">
+    <meta property="og:url" content="http://brandonchinn178.github.io">
+
+    <link rel="icon" type="image/png" href="/resources/favicon.png" meta-type="site-wide">
+    <link rel="stylesheet" type="text/css" href="/resources/style.css" meta-type="site-wide">
+  </head>
+  <body>
+    <link rel="stylesheet" type="text/css" href="/resources/blog.css ">
+<link rel="stylesheet" type="text/css" href="/resources/manni.css ">
+
+<header>
+    <h1><a href="/">Brandon Chinn</a> - <a href="/blog">Blog</a></h1>
+</header>
+<main>
+    <link rel="stylesheet" type="text/css" href="/resources/post.css ">
+<article>
+    <h1>Testing Coverage of Template Haskell functions</h1>
+    <p class="date">August  6, 2020</p>
+    <div><p>In my <a href="https://github.com/LeapYear/aeson-schemas"><code class="language-plaintext highlighter-rouge">aeson-schemas</code></a> library, I implement quasiquoters that will generate Template Haskell to define type-level schemas and operations to extract data out of a JSON object. Then I would write tests that look like this:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">let</span> <span class="n">o</span> <span class="o">::</span> <span class="kt">Object</span> <span class="o">[</span><span class="n">schema</span><span class="o">|</span> { foo: Int } <span class="o">|]</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">either</span> <span class="n">error</span> <span class="n">id</span> <span class="o">$</span> <span class="n">eitherDecode</span> <span class="o">[</span><span class="n">aesonQQ</span><span class="o">|</span> { "foo": 1 } <span class="o">|]</span>
+
+<span class="o">[</span><span class="n">get</span><span class="o">|</span> o.foo <span class="o">|]</span> <span class="p">`</span><span class="n">shouldBe</span><span class="p">`</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>I can run this with <code class="language-plaintext highlighter-rouge">stack test</code> and it would succeed. But after this succeeds, I wanted to measure coverage with <code class="language-plaintext highlighter-rouge">stack test --coverage</code>. The problem is that quasiquoters run and are spliced at compile-time, so the code that’s actually being tested looks like this:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">let</span> <span class="n">o</span> <span class="o">::</span> <span class="kt">Object</span> <span class="p">(</span><span class="kt">'SchemaObject</span> <span class="n">'</span><span class="p">[</span> <span class="n">'</span><span class="p">(</span><span class="s">"foo"</span><span class="p">,</span> <span class="kt">'SchemaScalar</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">])</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">either</span> <span class="n">error</span> <span class="n">id</span> <span class="o">$</span> <span class="n">eitherDecode</span> <span class="o">...</span>
+
+<span class="n">getKey</span> <span class="p">(</span><span class="kt">Proxy</span> <span class="o">@</span><span class="s">"foo"</span><span class="p">)</span> <span class="n">o</span> <span class="p">`</span><span class="n">shouldBe</span><span class="p">`</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>So we’re getting coverage on <code class="language-plaintext highlighter-rouge">getKey</code>, but not getting any coverage on the <code class="language-plaintext highlighter-rouge">get</code> or <code class="language-plaintext highlighter-rouge">schema</code> quasiquoters.</p>
+
+<p>The first problem here is that we need to actually run the quasiquoters at runtime, in addition to splicing them. Quasiquoters run in the <code class="language-plaintext highlighter-rouge">Q</code> monad, so we would need to figure out a way to run the <code class="language-plaintext highlighter-rouge">Q</code> monad at run-time.</p>
+
+<p>The second problem is that I would like to avoid duplicating each of my test cases, e.g.</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="n">testCase</span> <span class="s">"o.foo spliced"</span> <span class="o">$</span>
+    <span class="o">[</span><span class="n">get</span><span class="o">|</span> o.foo <span class="o">|]</span> <span class="p">`</span><span class="n">shouldBe</span><span class="p">`</span> <span class="o">...</span>
+<span class="p">,</span> <span class="n">testCase</span> <span class="s">"o.foo runtime"</span> <span class="o">$</span>
+    <span class="n">quoteExp</span> <span class="n">get</span> <span class="s">"o.foo"</span> <span class="p">`</span><span class="n">shouldBe</span><span class="p">`</span> <span class="o">...</span>
+<span class="p">,</span> <span class="o">...</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>In this blog post, I’ll be going over how I solved these problems (with the help of a new library I wrote for this purpose), and hopefully it’ll help someone else needing to do a similar task.</p>
+
+<h1 id="running-th-code-at-runtime">Running TH code at runtime</h1>
+
+<p>The first problem is to run the <code class="language-plaintext highlighter-rouge">Q</code> monad at runtime. Luckily, <code class="language-plaintext highlighter-rouge">template-haskell</code> provides a helpful <code class="language-plaintext highlighter-rouge">runQ</code> function which gets us 90% of the way there:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">runQ</span> <span class="o">::</span> <span class="kt">Quasi</span> <span class="n">m</span> <span class="o">=&gt;</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
+</code></pre></div></div>
+
+<p>The good news: <code class="language-plaintext highlighter-rouge">IO</code> has a <code class="language-plaintext highlighter-rouge">Quasi</code> instance, which means we can use this function to run the <code class="language-plaintext highlighter-rouge">Q</code> monad in <code class="language-plaintext highlighter-rouge">IO</code>. The bad news: the <code class="language-plaintext highlighter-rouge">Quasi IO</code> instance only works for a very limited number of methods, and errors when calling functions like <code class="language-plaintext highlighter-rouge">reify</code> or <code class="language-plaintext highlighter-rouge">lookupTypeName</code>. More bad news: there’s no way to get the error message out of a failure. It’s an <a href="https://gitlab.haskell.org/ghc/ghc/-/issues/2340">open issue</a> that <code class="language-plaintext highlighter-rouge">recover</code> doesn’t include the error message, and the <code class="language-plaintext highlighter-rouge">MonadFail</code> instance of <code class="language-plaintext highlighter-rouge">Q</code> throws away the <code class="language-plaintext highlighter-rouge">fail</code> message, so naively using <code class="language-plaintext highlighter-rouge">try (runQ ...) :: IO (Either SomeException ...)</code> will result in the unhelpful message <code class="language-plaintext highlighter-rouge">Left "Q monad failure"</code>.</p>
+
+<p>In order to solve this, I decided to write my own monad that implements <code class="language-plaintext highlighter-rouge">Quasi</code>. That way, we can manually mock functions like <code class="language-plaintext highlighter-rouge">reify</code> AND catch the actual error messages. Word of warning: this is a fairly hacky solution that depends on Template Haskell internals, but unfortunately, it’s the best we can do right now.</p>
+
+<h2 id="catching-error-messages">Catching error messages</h2>
+
+<p>The first thing we’ll do is write a monad that will pass everything through to the <code class="language-plaintext highlighter-rouge">Q</code> monad, except with an error handling system that lets us get the actual error message. First, let’s look at how the <code class="language-plaintext highlighter-rouge">Q</code> monad throws errors (<a href="http://hackage.haskell.org/package/template-haskell-2.16.0.0/docs/src/Language.Haskell.TH.Syntax.html#line-194">source</a>):</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">newtype</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Q</span> <span class="p">{</span> <span class="n">unQ</span> <span class="o">::</span> <span class="n">forall</span> <span class="n">m</span><span class="o">.</span> <span class="kt">Quasi</span> <span class="n">m</span> <span class="o">=&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="p">}</span>
+
+<span class="kr">instance</span> <span class="kt">Fail</span><span class="o">.</span><span class="kt">MonadFail</span> <span class="kt">Q</span> <span class="kr">where</span>
+  <span class="n">fail</span> <span class="n">s</span> <span class="o">=</span> <span class="n">report</span> <span class="kt">True</span> <span class="n">s</span> <span class="o">&gt;&gt;</span> <span class="kt">Q</span> <span class="p">(</span><span class="kt">Fail</span><span class="o">.</span><span class="n">fail</span> <span class="s">"Q monad failure"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>So it uses the <code class="language-plaintext highlighter-rouge">report True</code> function (<code class="language-plaintext highlighter-rouge">True</code> indicates that this is an error message being reported, as opposed to a warning message) to report the error message (which ostensibly gets passed to GHC to display a pretty compile-time message) and then calls <code class="language-plaintext highlighter-rouge">fail</code> in the <code class="language-plaintext highlighter-rouge">Quasi</code> instance we’re defining. This shows us why we only ever get the unhelpful “Q monad failure” message if we used <code class="language-plaintext highlighter-rouge">try</code>; because <code class="language-plaintext highlighter-rouge">fail</code> never actually gets the error message!</p>
+
+<p>So it seems like we’ll need to do an indirect pass of storing the message in our <code class="language-plaintext highlighter-rouge">qReport</code> implementation (<code class="language-plaintext highlighter-rouge">report</code> is basically just a proxy to <code class="language-plaintext highlighter-rouge">qReport</code>) and then get back the message in our <code class="language-plaintext highlighter-rouge">fail</code> implementation. Our first pass will look something like this:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">newtype</span> <span class="kt">TestQ</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">TestQ</span>
+  <span class="p">{</span> <span class="n">unTestQ</span> <span class="o">::</span>
+      <span class="c1">-- store the message for ExceptT to throw</span>
+      <span class="kt">StateT</span> <span class="p">(</span><span class="kt">Maybe</span> <span class="kt">String</span><span class="p">)</span>
+        <span class="c1">-- gets the message from StateT and return 'Either String a'</span>
+        <span class="p">(</span> <span class="kt">ExceptT</span> <span class="kt">String</span>
+            <span class="kt">Q</span>
+        <span class="p">)</span>
+        <span class="n">a</span>
+  <span class="p">}</span> <span class="kr">deriving</span>
+    <span class="p">(</span> <span class="kt">Functor</span>
+    <span class="p">,</span> <span class="kt">Applicative</span>
+    <span class="p">,</span> <span class="kt">Monad</span>
+    <span class="p">,</span> <span class="kt">MonadIO</span>
+    <span class="p">)</span>
+
+<span class="kr">instance</span> <span class="kt">Quasi</span> <span class="kt">TestQ</span> <span class="kr">where</span>
+  <span class="n">qReport</span> <span class="kr">_</span> <span class="n">msg</span> <span class="o">=</span> <span class="kt">TestQ</span> <span class="o">$</span> <span class="kt">State</span><span class="o">.</span><span class="n">put</span> <span class="o">$</span> <span class="kt">Just</span> <span class="n">msg</span>
+  <span class="o">...</span>
+
+<span class="kr">instance</span> <span class="kt">MonadFail</span> <span class="kt">TestQ</span> <span class="kr">where</span>
+  <span class="n">fail</span> <span class="n">msg</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">storedMessage</span> <span class="o">&lt;-</span> <span class="kt">TestQ</span> <span class="kt">State</span><span class="o">.</span><span class="n">get</span>
+    <span class="kt">TestQ</span> <span class="o">$</span> <span class="n">lift</span> <span class="o">$</span> <span class="kt">Except</span><span class="o">.</span><span class="n">throwE</span> <span class="o">$</span> <span class="n">fromMaybe</span> <span class="n">msg</span> <span class="n">storedMessage</span>
+
+<span class="n">tryTestQ</span> <span class="o">::</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Q</span> <span class="p">(</span><span class="kt">Either</span> <span class="kt">String</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">tryTestQ</span> <span class="o">=</span>
+  <span class="kt">Except</span><span class="o">.</span><span class="n">runExceptT</span>              <span class="c1">-- ExceptT String Q a =&gt; Q (Either String a)</span>
+  <span class="o">.</span> <span class="p">(`</span><span class="kt">State</span><span class="o">.</span><span class="n">evalStateT</span><span class="p">`</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="c1">-- StateT ... a       =&gt; ExceptT String Q a</span>
+  <span class="o">.</span> <span class="n">unTestQ</span>                      <span class="c1">-- TestQ a            =&gt; StateT ... a</span>
+  <span class="o">.</span> <span class="n">runQ</span>                         <span class="c1">-- Q a                =&gt; TestQ a</span>
+</code></pre></div></div>
+
+<p>Notice that, now when <code class="language-plaintext highlighter-rouge">fail</code> is called in the <code class="language-plaintext highlighter-rouge">Q</code> monad, it will:</p>
+
+<ol>
+  <li>Call <code class="language-plaintext highlighter-rouge">qReport</code>, which will:
+    <ol>
+      <li>Store the message in the <code class="language-plaintext highlighter-rouge">StateT</code> state</li>
+    </ol>
+  </li>
+  <li>Call <code class="language-plaintext highlighter-rouge">fail</code>, which will:
+    <ol>
+      <li>Get the stored message from <code class="language-plaintext highlighter-rouge">qReport</code></li>
+      <li>Throw the stored message with <code class="language-plaintext highlighter-rouge">ExceptT</code></li>
+    </ol>
+  </li>
+</ol>
+
+<p>And now with the <code class="language-plaintext highlighter-rouge">tryTestQ</code> function, we can successfully catch and test the actual error messages thrown by our Template Haskell function! Catching errors is definitely important for testing coverage, but we still end up with the <code class="language-plaintext highlighter-rouge">Q</code> monad. Next step is actually running the <code class="language-plaintext highlighter-rouge">Q</code> monad at runtime.</p>
+
+<h2 id="mock-q-functions">Mock Q functions</h2>
+
+<p>If the Template Haskell function is pure enough (i.e. not needing to inspect the type environment), we could just use <code class="language-plaintext highlighter-rouge">runQ</code>:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tryTestQ_IO</span> <span class="o">::</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">IO</span> <span class="p">(</span><span class="kt">Either</span> <span class="kt">String</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">tryTestQ_IO</span> <span class="o">=</span> <span class="n">runQ</span> <span class="o">.</span> <span class="n">tryTestQ</span>
+</code></pre></div></div>
+
+<p>but this won’t work if you use features like <code class="language-plaintext highlighter-rouge">reify</code> or <code class="language-plaintext highlighter-rouge">lookupTypeName</code>. So let’s augment <code class="language-plaintext highlighter-rouge">TestQ</code> to mock out these functions. For this blog post, I’ll only mock out <code class="language-plaintext highlighter-rouge">lookupTypeName</code>, but it should be straightforward to extend for the other functions. First, we need a data type storing the mocks. Then, we’ll need to store it in <code class="language-plaintext highlighter-rouge">TestQ</code> and use in <code class="language-plaintext highlighter-rouge">qLookupName</code> (the proxy for <code class="language-plaintext highlighter-rouge">lookupTypeName</code> and <code class="language-plaintext highlighter-rouge">lookupValueName</code>).</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">QState</span> <span class="o">=</span> <span class="kt">QState</span>
+  <span class="p">{</span> <span class="n">knownNames</span> <span class="o">::</span> <span class="p">[(</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Name</span><span class="p">)]</span>
+  <span class="p">}</span>
+
+<span class="kr">newtype</span> <span class="kt">TestQ</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">TestQ</span>
+  <span class="p">{</span> <span class="n">unTestQ</span> <span class="o">::</span>
+      <span class="kt">ReaderT</span> <span class="kt">QState</span>
+        <span class="p">(</span> <span class="o">...</span>
+        <span class="p">)</span>
+        <span class="n">a</span>
+  <span class="p">}</span> <span class="kr">deriving</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="kr">instance</span> <span class="kt">Quasi</span> <span class="kt">TestQ</span> <span class="kr">where</span>
+  <span class="n">qLookupName</span> <span class="kr">_</span> <span class="n">name</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="kt">QState</span><span class="p">{</span><span class="n">knownNames</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="kt">TestQ</span> <span class="kt">Reader</span><span class="o">.</span><span class="n">ask</span>
+    <span class="n">return</span> <span class="o">$</span> <span class="n">lookup</span> <span class="n">knownNames</span> <span class="n">name</span>
+
+  <span class="o">...</span>
+
+<span class="n">tryTestQ</span> <span class="o">::</span> <span class="kt">QState</span> <span class="o">-&gt;</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Q</span> <span class="p">(</span><span class="kt">Either</span> <span class="kt">String</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">tryTestQ</span> <span class="n">qState</span> <span class="o">=</span>
+  <span class="kt">Except</span><span class="o">.</span><span class="n">runExceptT</span>
+  <span class="o">.</span> <span class="p">(`</span><span class="kt">State</span><span class="o">.</span><span class="n">evalStateT</span><span class="p">`</span> <span class="kt">Nothing</span><span class="p">)</span>
+  <span class="o">.</span> <span class="p">(`</span><span class="kt">Reader</span><span class="o">.</span><span class="n">runReaderT</span><span class="p">`</span> <span class="n">qState</span><span class="p">)</span>
+  <span class="o">.</span> <span class="n">unTestQ</span>
+  <span class="o">.</span> <span class="n">runQ</span>
+</code></pre></div></div>
+
+<p>And now, running</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tryTestQ</span> <span class="p">(</span><span class="kt">QState</span> <span class="p">[(</span><span class="s">"Maybe"</span><span class="p">,</span> <span class="n">''Maybe</span><span class="p">)])</span> <span class="o">...</span>
+</code></pre></div></div>
+
+<p>will lookup using the names we’ve specified. At this point, we can go ahead and use <code class="language-plaintext highlighter-rouge">tryTestQ_IO</code>, and it’ll now work with our mocks! We could even use <code class="language-plaintext highlighter-rouge">unsafePerformIO</code> to get back pure results:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tryTestQ_IO</span> <span class="o">::</span> <span class="kt">QState</span> <span class="o">-&gt;</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">IO</span> <span class="p">(</span><span class="kt">Either</span> <span class="kt">String</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">tryTestQ_IO</span> <span class="n">qState</span> <span class="o">=</span> <span class="n">runQ</span> <span class="o">.</span> <span class="n">tryTestQ</span> <span class="n">qState</span>
+
+<span class="n">tryTestQ_Pure</span> <span class="o">::</span> <span class="kt">QState</span> <span class="o">-&gt;</span> <span class="kt">Q</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Either</span> <span class="kt">String</span> <span class="n">a</span>
+<span class="n">tryTestQ_Pure</span> <span class="n">qState</span> <span class="o">=</span> <span class="n">unsafePerformIO</span> <span class="o">.</span> <span class="n">tryTestQ_IO</span> <span class="n">qState</span>
+</code></pre></div></div>
+
+<p>All in all, this was a ton of fun, but it’s a ton of work to do, all to set up what we actually want to do — write tests! So I’ve pushed all of this work into the <a href="https://github.com/LeapYear/th-test-utils"><code class="language-plaintext highlighter-rouge">th-test-utils</code></a> package (the implementation here isn’t pushed to Hackage yet, but it’s on <code class="language-plaintext highlighter-rouge">master</code>), hopefully to make someone else’s life easier.</p>
+
+<h1 id="avoid-duplicating-tests">Avoid duplicating tests</h1>
+
+<p>Ok so now that we’re able to run Template Haskell functions at runtime, I would like to avoid duplicating all of my tests (one to test the spliced implementation, one to run at runtime and get coverage). So the general idea is to take the prior implementation:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span><span class="n">get</span><span class="o">|</span> o.foo <span class="o">|]</span>
+<span class="o">===&gt;</span>
+<span class="n">getKey</span> <span class="o">@</span><span class="s">"foo"</span> <span class="n">o</span>
+</code></pre></div></div>
+
+<p>and write a new quasiquoter that will splice into running the quasiquoter itself (quine-style) in addition to the normal splice. We’ll use <code class="language-plaintext highlighter-rouge">deepseq</code> to fully evaluate the quasiquoter before returning the usual value (you’ll need to implement <code class="language-plaintext highlighter-rouge">NFData</code> for all the Template Haskell types, a separate package I’ll hopefully split off soon).</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span><span class="n">runGet</span><span class="o">|</span> o.foo <span class="o">|]</span>
+<span class="o">===&gt;</span>
+<span class="n">quoteExp</span> <span class="n">get</span> <span class="s">"o.foo"</span> <span class="p">`</span><span class="n">deepseq</span><span class="p">`</span> <span class="n">getKey</span> <span class="o">@</span><span class="s">"foo"</span> <span class="n">o</span>
+</code></pre></div></div>
+
+<p>Note: <code class="language-plaintext highlighter-rouge">[get| ... |]</code> is just syntax sugar for <code class="language-plaintext highlighter-rouge">quoteExp get "..."</code> when used as an expression. The implementation is fairly straightforward:</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">runGet</span> <span class="o">::</span> <span class="kt">QuasiQuoter</span>
+<span class="n">runGet</span> <span class="o">=</span> <span class="kt">QuasiQuoter</span>
+  <span class="p">{</span> <span class="n">quoteExp</span> <span class="o">=</span> <span class="nf">\</span><span class="n">s</span> <span class="o">-&gt;</span>
+      <span class="p">[</span><span class="o">|</span>
+        <span class="n">quoteExp</span> <span class="n">get</span> <span class="n">s</span>    <span class="c1">-- run quasiquoter at run-time</span>
+        <span class="p">`</span><span class="n">deepseq</span><span class="p">`</span>
+        <span class="o">$</span><span class="p">(</span><span class="n">quoteExp</span> <span class="n">get</span> <span class="n">s</span><span class="p">)</span> <span class="c1">-- run quasiquoter at compile-time and</span>
+                          <span class="c1">-- actually return this value at run-time</span>
+      <span class="o">|</span><span class="p">]</span>
+  <span class="p">,</span> <span class="o">...</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="test-all-the-things">Test all the things!</h1>
+
+<p>And now, <code class="language-plaintext highlighter-rouge">runGet</code> is a drop-in replacement for <code class="language-plaintext highlighter-rouge">get</code> in our tests that will splice the <code class="language-plaintext highlighter-rouge">get</code> quasiquoter as usual, <em>as well as</em> running the quasiquoter at runtime (ignoring the value), finally resulting in automatic coverage on the quasiquotation actually being spliced!</p>
+
+<div class="language-hs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- old, without coverage</span>
+<span class="n">testCase</span> <span class="s">"Test o.foo"</span> <span class="o">$</span>
+  <span class="o">[</span><span class="n">get</span><span class="o">|</span> o.foo <span class="o">|]</span> <span class="p">`</span><span class="n">shouldBe</span><span class="p">`</span> <span class="mi">1</span>
+
+<span class="c1">-- new, with coverage</span>
+<span class="n">testCase</span> <span class="s">"Test o.foo"</span> <span class="o">$</span>
+  <span class="o">[</span><span class="n">runGet</span><span class="o">|</span> o.foo <span class="o">|]</span> <span class="p">`</span><span class="n">shouldBe</span><span class="p">`</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>If you have a library that uses Template Haskell or QuasiQuoters, I hope the <code class="language-plaintext highlighter-rouge">th-test-utils</code> library will help you write more/better unit tests. Getting coverage on my library actually helped me uncover bugs, and I hope it can do the same for you!</p>
+</div>
+</article>
+
+</main>
+
+  </body>
+</html>

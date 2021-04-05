@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "blog_home.css",
+	"sources": [
+		"blog_home.scss"
+	],
+	"sourcesContent": [
+		"$gray: #aaa;\n\n.banner {\n    text-align: center;\n    font-style: italic;\n}\n\narticle {\n    padding: 20px 0;\n\n    border-bottom: 1px solid $gray;\n    &:last-child {\n        border-bottom: none;\n    }\n\n    span.date {\n        font-size: 1rem;\n        font-weight: normal;\n        font-style: italic;\n    }\n}\n"
+	],
+	"names": [],
+	"mappings": "AAEA,AAAA,OAAO,CAAC,EACJ,UAAU,EAAE,MAAM,EAClB,UAAU,EAAE,MAAM,GACrB;;AAED,AAAA,OAAO,CAAC,EACJ,OAAO,EAAE,MAAM,EAEf,aAAa,EAAE,GAAG,CAAC,KAAK,CAVrB,IAAI,GAoBV;;AAbD,AAII,OAJG,CAID,UAAU,CAAC,EACT,aAAa,EAAE,IAAI,GACtB;;AANL,AAQI,OARG,CAQH,IAAI,AAAA,KAAK,CAAC,EACN,SAAS,EAAE,IAAI,EACf,WAAW,EAAE,MAAM,EACnB,UAAU,EAAE,MAAM,GACrB"
+}

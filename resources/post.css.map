@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "post.css",
+	"sources": [
+		"post.scss"
+	],
+	"sourcesContent": [
+		"main {\n    padding: 20px 0;\n}\n\narticle {\n    .date {\n        margin-top: 0;\n        font-style: italic;\n    }\n}\n"
+	],
+	"names": [],
+	"mappings": "AAAA,AAAA,IAAI,CAAC,EACD,OAAO,EAAE,MAAM,GAClB;;AAED,AACI,OADG,CACH,KAAK,CAAC,EACF,UAAU,EAAE,CAAC,EACb,UAAU,EAAE,MAAM,GACrB"
+}

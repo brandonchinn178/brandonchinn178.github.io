@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "style.css",
+	"sources": [
+		"style.scss"
+	],
+	"sourcesContent": [
+		"@font-face {\n  font-family: \"Amble\";\n  src: url(fonts/Amble-Regular.ttf) format(\"truetype\");\n}\n\n@font-face {\n  font-family: \"Amble\";\n  src: url(fonts/Amble-Bold.ttf) format(\"truetype\");\n  font-weight: bold;\n}\n\nhtml, body {\n  height: 100%;\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: Amble, Roboto, Arial, sans-serif;\n\n  margin: 0;\n  padding: 0;\n}\n"
+	],
+	"names": [],
+	"mappings": "AAAA,UAAU,GACR,WAAW,EAAE,OAAO,EACpB,GAAG,EAAE,4BAA4B,CAAC,kBAAkB;;AAGtD,UAAU,GACR,WAAW,EAAE,OAAO,EACpB,GAAG,EAAE,yBAAyB,CAAC,kBAAkB,EACjD,WAAW,EAAE,IAAI;;AAGnB,AAAA,IAAI,EAAE,IAAI,CAAC,EACT,MAAM,EAAE,IAAI,EACZ,UAAU,EAAE,UAAU,GACvB;;AAED,AAAA,IAAI,CAAC,EACH,WAAW,EAAE,gCAAgC,EAE7C,MAAM,EAAE,CAAC,EACT,OAAO,EAAE,CAAC,GACX"
+}

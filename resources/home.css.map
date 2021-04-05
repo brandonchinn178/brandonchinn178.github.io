@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "home.css",
+	"sources": [
+		"home.scss"
+	],
+	"sourcesContent": [
+		"$background-color: #fff;\n$black: #333;\n$header-color: $black;\n$home-button-color: $black;\n\nbody {\n  font-size: 20px;\n\n  background: $background-color;\n\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n}\n\nh1 {\n  margin: 0;\n  margin-bottom: 20px;\n  font-weight: bold;\n  font-size: 350%;\n  color: $header-color;\n}\n\nnav {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  grid-gap: 20px;\n\n  a {\n    display: flex;\n    height: 2.2em;\n    align-items: center;\n    justify-content: center;\n\n    text-decoration: none;\n    outline: 0;\n\n    background: $background-color;\n    color: $home-button-color;\n    transition: 0.2s color, 0.2s background;\n    &:hover {\n      background: $home-button-color;\n      color: $background-color;\n    }\n  }\n}\n\n// mobile\n@media only screen and (max-device-width: 480px) {\n  body {\n    font-size: 48px;\n  }\n\n  nav {\n    grid-template-columns: 1fr;\n  }\n}\n"
+	],
+	"names": [],
+	"mappings": "AAKA,AAAA,IAAI,CAAC,EACH,SAAS,EAAE,IAAI,EAEf,UAAU,EARO,IAAI,EAUrB,OAAO,EAAE,IAAI,EACb,WAAW,EAAE,MAAM,EACnB,eAAe,EAAE,MAAM,EACvB,UAAU,EAAE,MAAM,GACnB;;AAED,AAAA,EAAE,CAAC,EACD,MAAM,EAAE,CAAC,EACT,aAAa,EAAE,IAAI,EACnB,WAAW,EAAE,IAAI,EACjB,SAAS,EAAE,IAAI,EACf,KAAK,EApBC,IAAI,GAqBX;;AAED,AAAA,GAAG,CAAC,EACF,OAAO,EAAE,IAAI,EACb,qBAAqB,EAAE,OAAO,EAC9B,QAAQ,EAAE,IAAI,GAmBf;;AAtBD,AAKE,GALC,CAKD,CAAC,CAAC,EACA,OAAO,EAAE,IAAI,EACb,MAAM,EAAE,KAAK,EACb,WAAW,EAAE,MAAM,EACnB,eAAe,EAAE,MAAM,EAEvB,eAAe,EAAE,IAAI,EACrB,OAAO,EAAE,CAAC,EAEV,UAAU,EAtCK,IAAI,EAuCnB,KAAK,EAtCD,IAAI,EAuCR,UAAU,EAAE,2BAA2B,GAKxC;;AArBH,AAiBI,GAjBD,CAKD,CAAC,CAYG,KAAK,CAAC,EACN,UAAU,EAzCR,IAAI,EA0CN,KAAK,EA3CQ,IAAI,GA4ClB;;AAKL,MAAM,0CACJ,GAAA,AAAA,IAAI,CAAC,EACH,SAAS,EAAE,IAAI,GAChB,CAED,AAAA,GAAG,CAAC,EACF,qBAAqB,EAAE,GAAG,GAC3B,EAJA"
+}

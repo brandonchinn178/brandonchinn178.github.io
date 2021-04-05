@@ -1,0 +1,9 @@
+@font-face { font-family: "Amble"; src: url(fonts/Amble-Regular.ttf) format("truetype"); }
+
+@font-face { font-family: "Amble"; src: url(fonts/Amble-Bold.ttf) format("truetype"); font-weight: bold; }
+
+html, body { height: 100%; box-sizing: border-box; }
+
+body { font-family: Amble, Roboto, Arial, sans-serif; margin: 0; padding: 0; }
+
+/*# sourceMappingURL=style.css.map */

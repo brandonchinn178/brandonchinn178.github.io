@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "blog.css",
+	"sources": [
+		"blog.scss"
+	],
+	"sourcesContent": [
+		"body {\n    padding: 20px;\n\n    width: 800px;\n    margin: 0 auto;\n}\n\nheader {\n    margin-bottom: 1em;\n    border-bottom: 1px solid black;\n\n    padding-bottom: 1em;\n}\n\nh1 {\n    margin: 0;\n\n    a {\n        text-decoration: none;\n        color: initial;\n    }\n}\n\np {\n    line-height: 1.5em;\n}\n"
+	],
+	"names": [],
+	"mappings": "AAAA,AAAA,IAAI,CAAC,EACD,OAAO,EAAE,IAAI,EAEb,KAAK,EAAE,KAAK,EACZ,MAAM,EAAE,MAAM,GACjB;;AAED,AAAA,MAAM,CAAC,EACH,aAAa,EAAE,GAAG,EAClB,aAAa,EAAE,eAAe,EAE9B,cAAc,EAAE,GAAG,GACtB;;AAED,AAAA,EAAE,CAAC,EACC,MAAM,EAAE,CAAC,GAMZ;;AAPD,AAGI,EAHF,CAGE,CAAC,CAAC,EACE,eAAe,EAAE,IAAI,EACrB,KAAK,EAAE,OAAO,GACjB;;AAGL,AAAA,CAAC,CAAC,EACE,WAAW,EAAE,KAAK,GACrB"
+}
