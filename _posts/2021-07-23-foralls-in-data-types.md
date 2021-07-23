@@ -25,7 +25,7 @@ In this example, `Foo` contains a function that is itself parametrized by `a`. W
 
 To go a bit more in-depth, think of `forall` as an additional argument to the function. So `traceFoo` actually has two arguments: the type of `a` (which must have a `Show` instance), and a value of type `a`. With this framework, it makes sense why the caller gets to use the same `traceFoo` function for multiple types; every time the caller calls `traceFoo`, it can provide a different "argument" for the type of `a`.
 
-For more information, see: https://wiki.haskell.org/Rank-N_types
+For more information, see: [https://wiki.haskell.org/Rank-N_types](https://wiki.haskell.org/Rank-N_types)
 
 # Existential type
 
@@ -53,7 +53,7 @@ Typically, existential types are only useful when attaching a constraint on `a`.
 
 To go more in-depth again: since the `forall` is **outside** the constructor, if we treat `forall` as an additional argument, the `SomeBar` **constructor** is the thing that has two arguments: the type of `a` and a value of type `Bar a`. So every time the provider calls the `SomeBar` constructor, it can provide a different "argument" for the type of `a`.
 
-For more information, see: https://wiki.haskell.org/Existential_type
+For more information, see: [https://wiki.haskell.org/Existential_type](https://wiki.haskell.org/Existential_type)
 
 # Recap
 
