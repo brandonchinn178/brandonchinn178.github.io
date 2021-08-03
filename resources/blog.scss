@@ -17,11 +17,20 @@ header {
 
 h1 {
     margin: 0;
+    font-size: 1.7em;
 
     a {
         text-decoration: none;
         color: initial;
     }
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
+h3 {
+    font-size: 1.1em;
 }
 
 p {
@@ -34,4 +43,28 @@ table {
         border-bottom: 1px solid black;
         padding: 0.5rem 1rem;
     }
+}
+
+pre {
+  overflow-x: auto;
+  background: #DDD;
+  padding: 20px;
+}
+
+code.language-plaintext {
+    background: #DDD;
+    color: #8E0808;
+    padding: 0 5px;
+
+    a > & {
+        color: unset;
+        color: -webkit-link; // unset doesn't work for visited links
+    }
+}
+
+blockquote {
+    margin-inline-start: 20px;
+    border-inline-start: 5px solid #DDD;
+    padding-inline-start: 20px;
+    color: #555;
 }
