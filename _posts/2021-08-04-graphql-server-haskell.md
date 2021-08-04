@@ -220,12 +220,12 @@ import MyProject.Users.API (User)
 -- The GQLResolver type family would be defined in the
 -- GraphQL framework
 
-type instance GQLResolver User "id" = User -> MyMonad Text
-type instance GQLResolver User "name" = User -> MyMonad Text
-type instance GQLResolver User "isOlderThan" = UserIsOlderThanArgs -> User -> MyMonad Bool
+type instance GQLResolver "User" "id" = User -> MyMonad Text
+type instance GQLResolver "User" "name" = User -> MyMonad Text
+type instance GQLResolver "User" "isOlderThan" = UserIsOlderThanArgs -> User -> MyMonad Bool
 
-type instance GQLResolver Query "users" = MyMonad [User]
-type instance GQLResolver Query "user" = QueryUserArgs -> MyMonad [User]
+type instance GQLResolver "Query" "users" = MyMonad [User]
+type instance GQLResolver "Query" "user" = QueryUserArgs -> MyMonad [User]
 
 data UserIsOlderThanArgs = UserIsOlderThanArgs
   { age :: Int
@@ -243,14 +243,14 @@ import MyProject.Monad (MyMonad)
 import MyProject.Posts.API (Post)
 import MyProject.Users.API (User)
 
-type instance GQLResolver Post "id" = Post -> MyMonad Text
-type instance GQLResolver Post "title" = Post -> MyMonad Text
-type instance GQLResolver Post "author" = Post -> MyMonad User
+type instance GQLResolver "Post" "id" = Post -> MyMonad Text
+type instance GQLResolver "Post" "title" = Post -> MyMonad Text
+type instance GQLResolver "Post" "author" = Post -> MyMonad User
 
-type instance GQLResolver User "posts" = User -> MyMonad [Post]
+type instance GQLResolver "User" "posts" = User -> MyMonad [Post]
 
-type instance GQLResolver Query "posts" = MyMonad [Post]
-type instance GQLResolver Query "post" = QueryPostArgs -> MyMonad [Post]
+type instance GQLResolver "Query" "posts" = MyMonad [Post]
+type instance GQLResolver "Query" "post" = QueryPostArgs -> MyMonad [Post]
 
 data QueryPostArgs = QueryPostArgs
   { id :: Text
@@ -265,10 +265,10 @@ It would also generate a top-level `Gen.hs` file containing definitions describi
 -- Constraint that checks that all resolvers have
 -- been implemented
 type AllFieldsResolved =
-  ( ResolveField User "id"
-  , ResolveField User "name"
-  , ResolveField Post "id"
-  , ResolveField Query "users"
+  ( ResolveField "User" "id"
+  , ResolveField "User" "name"
+  , ResolveField "Post" "id"
+  , ResolveField "Query" "users"
   , ...
   )
 
@@ -284,7 +284,7 @@ allGQLTypeDefs =
             GQLTypeFieldDef
               { name = "users"
               , description = Nothing
-              , proxy = Proxy :: Proxy (Query, "users")
+              , proxy = Proxy :: Proxy ("Query", "users")
               , result =
                   GQLTypeNonNull $
                   GQLTypeList $
@@ -355,19 +355,19 @@ import MyProject.Users.Gen
 --   class ResolveField ty field where
 --     resolve :: GQLResolver ty field
 
-instance ResolveField User "id" where
+instance ResolveField "User" "id" where
   resolve = pure . Text.pack . show . userId
 
-instance ResolveField User "name" where
+instance ResolveField "User" "name" where
   resolve = pure . userName
 
-instance ResolveField User "isOlderThan" where
+instance ResolveField "User" "isOlderThan" where
   resolve UserIsOlderThanArgs{age} = pure . (> age) . userAge
 
-instance ResolveField Query "users" where
+instance ResolveField "Query" "users" where
   resolve = getUsers
 
-instance ResolveField Query "user" where
+instance ResolveField "Query" "user" where
   resolve QueryUserArgs{id} = getUser . UserId . read . Text.unpack $ id
 ```
 
@@ -378,22 +378,22 @@ import MyProject.Users.API (User, getUser)
 import MyProject.Posts.API
 import MyProject.Posts.Gen
 
-instance ResolveField Post "id" where
+instance ResolveField "Post" "id" where
   resolve = pure . Text.pack . show . postId
 
-instance ResolveField Post "title" where
+instance ResolveField "Post" "title" where
   resolve = pure . postTitle
 
-instance ResolveField Post "author" where
+instance ResolveField "Post" "author" where
   resolve = getUser . postAuthorId
 
-instance ResolveField User "posts" where
+instance ResolveField "User" "posts" where
   resolve = getPostsForUser . userId
 
-instance ResolveField Query "posts" where
+instance ResolveField "Query" "posts" where
   resolve = getPosts
 
-instance ResolveField Query "post" where
+instance ResolveField "Query" "post" where
   resolve QueryPostArgs{id} = getPost . PostId . read . Text.unpack $ id
 ```
 
