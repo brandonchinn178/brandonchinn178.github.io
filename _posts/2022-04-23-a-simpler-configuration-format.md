@@ -269,11 +269,17 @@ These are some random musings I have that would be nice to include in the spec, 
 
 ## Comparison to other formats
 
-* **XML** is a bit verbose for me, and very difficult to read. The line between attributes and subnodes are a bit fuzzy, and it's annoying to have to repeat the whole tag name to open and close the node.
+* **XML** is a bit verbose for me, and very difficult to read. The line between attributes and subnodes are a bit fuzzy, and it's annoying to have to repeat the whole tag name to open and close the node. One thing that XML shares with EON, though, is that it also treats node contents as strings, with type deserialization being defined in the application.
 * **JSON** is really good for transferring data between machines, but is not good for user generation + consumption. It doesn't support comments, it doesn't support trailing commas, and, while unambiguous in terms of what things parse to, is relatively hard to read.
 * **YAML** is rather nice, but the spec includes way too many features, and has some confusing behaviors. Feature-wise, it supports anchors (making `&` and `*` reserved characters), type-defining pragmas (which led to arbitrary code execution in the initial Python implementation), and automatic value conversions (`[x,y,z]` => `["x", true, "z"]`), which are way too featureful, A. for what I want to support in a config file, and B. for library implementers to be completely spec-compliant.
 * **TOML** is really good for flat-ish configs, but if you want to nest lists and objects a few levels, TOML really starts to stretch to its limit.
 * Typed configuration languages like **Dhall** or **Nickel** have a lot of syntax, are a bit difficult to learn, and, similar to YAML, is a bit too featureful than I need/want.
+
+Yes, obligatory XKCD:
+
+![XKCD: Standards](https://imgs.xkcd.com/comics/standards.png)
+
+I think all of the above formats are really good for certain things, but I think the one thing currently lacking is a readable format (like YAML) with very simple semantics (unlike YAML). EON fills this gap, and introduces a new concept of a configuration format that doesn't force users to know about types. If you have a field where you really need to allow the user to specify if they mean the number `1` or the string `"1"`, then sure, go with YAML. But I would imagine 90% of the time, the user doesn't need the distinction, which is where EON's simplicity shines over YAML.
 
 # Next steps
 
