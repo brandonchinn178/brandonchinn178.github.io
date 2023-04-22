@@ -2,10 +2,16 @@
 ---
 
 body {
-    padding: 20px;
+    padding: 2rem 4rem;
 
-    width: 800px;
+    max-width: 80%;
     margin: 0 auto;
+    transition: max-width 0.5s;
+}
+@media (max-width: 800px) {
+    body {
+        max-width: 100%;
+    }
 }
 
 header {
@@ -33,7 +39,7 @@ h3 {
     font-size: 1.1em;
 }
 
-p {
+p, li, div {
     line-height: 1.5em;
 }
 
@@ -48,7 +54,7 @@ table {
 pre {
   overflow-x: auto;
   background: #DDD;
-  padding: 20px;
+  padding: 1.5rem;
 }
 
 code.language-plaintext {
@@ -63,8 +69,8 @@ code.language-plaintext {
 }
 
 blockquote {
-    margin-inline-start: 20px;
+    margin-inline-start: 1.5rem;
     border-inline-start: 5px solid #DDD;
-    padding-inline-start: 20px;
+    padding-inline-start: 1rem;
     color: #555;
 }
