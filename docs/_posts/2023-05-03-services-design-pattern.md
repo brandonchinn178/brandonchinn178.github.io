@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The "Services" design
+title: The "Services" design pattern
 ---
 
 In large systems, [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) is a powerful design pattern that allows subsystems to be modular and iterate independently of other subsystems. Concretely, it enables building subsystems in parallel and testing them independently, e.g. with mocking.

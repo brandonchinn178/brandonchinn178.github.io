@@ -84,7 +84,7 @@ In this particular use-case, we were really only using the query as a cache key,
 
 Lastly, reusing types meant having a package at the very top of the dependency tree defining all of the types to be reused in the rest of the system. For example, even if a package only used the `User` type, it would be blocked on building all the types it doesn't even use. We did some work to improve this bottleneck, but this was still one of the biggest issues in our build.
 
-One way we were trying to solve this was by breaking out domain-level packages that internally defined all the types they needed to know about (see [other blog post]({% post_url 2023-04-22-services-design %})). For example, package A might know about users, but it might really only need a reference to a user's ID, so instead of waiting for `User` and everything `User` depends on to compile, package A can just define a quick
+One way we were trying to solve this was by breaking out domain-level packages that internally defined all the types they needed to know about (see [other blog post]({% post_url 2023-05-03-services-design-pattern %})). For example, package A might know about users, but it might really only need a reference to a user's ID, so instead of waiting for `User` and everything `User` depends on to compile, package A can just define a quick
 
 ```haskell
 data User = User { userId :: Int64 }
