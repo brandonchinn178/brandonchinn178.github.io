@@ -11,4 +11,4 @@ docker run --rm -it \
     -p "${LIVERELOAD_PORT}:${LIVERELOAD_PORT}" \
     -p "${JEKYLL_PORT}:4000" \
     jekyll/jekyll \
-    jekyll serve --livereload --livereload-port "${LIVERELOAD_PORT}" --future
+    jekyll serve --livereload --livereload-port "${LIVERELOAD_PORT}" --future --source docs/
