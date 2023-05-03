@@ -1,0 +1,27 @@
+---
+---
+
+$border-style: 1px solid #aaa;
+
+article {
+    padding: 20px 0;
+
+    border-top: $border-style;
+    &:last-child {
+        border-bottom: $border-style;
+    }
+
+    h2 {
+        margin: 0;
+    }
+
+    span.date {
+        font-size: 1rem;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
