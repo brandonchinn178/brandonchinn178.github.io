@@ -1,7 +1,3 @@
-# brandonchinn178.github.io
+My website.
 
-## Run locally
-
-```bash
-./serve.sh
-```
+To run locally, run `./serve.sh`.
