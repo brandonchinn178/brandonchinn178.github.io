@@ -199,8 +199,9 @@ So the following comparisons will only focus on managing side-effectful operatio
 * **Effects**
     * Effect systems (like `polysemy` or `eff`) are a newer method of managing effects. Similar to RIO, it uses one hardcoded monad with a polymorphic context containing the set of effects allowed.
     * Effect systems seem to be the closest competition to the Services design for writing unit tests with mocked effects. You could use `reinterpret` to stub the operations the unit test cares about and pass through all other operations.
-    * Like RIO, effect systems also don't help when defining functions with business logic running in a `SqlTransaction` monad.
-    * The main downside with effect systems is they haven't been used as much in real world systems. One major question is how good their performance is (possibly getting improved with GHC 9.6's support for delimited continuations).
+    * ~~Like RIO, effect systems also don't help when defining functions with business logic running in a `SqlTransaction` monad.~~
+    * The main downside with effect systems is they haven't been used as much in real world systems. ~~One major question is how good their performance is (possibly getting improved with GHC 9.6's support for delimited continuations).~~
+    * _Thanks to [u/arybczak](https://www.reddit.com/r/haskell/comments/136e6vt/comment/jiq8ovb/) for clearing up some of these points_
 
 ## Final thoughts
 
