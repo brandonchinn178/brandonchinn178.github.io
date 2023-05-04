@@ -1,9 +1,7 @@
 ---
 ---
 
-$theme-blue: #004880;
-$theme-white: #fafafa;
-$theme-black: #1a232b;
+@import "colors.scss";
 
 $font-sans-serif: Assistant, Roboto, Helvetica, Arial, sans-serif;
 $font-monospace: Inconsolata, "Lucida Console", Courier, ui-monospace, monospace;
@@ -108,7 +106,7 @@ table {
 
 pre {
   overflow-x: auto;
-  background: #DDD;
+  background: $theme-gray-light;
   padding: 1.5rem;
 }
 
@@ -116,8 +114,8 @@ code {
     font-family: $font-monospace;
 
     &.language-plaintext {
-        background: #DDD;
-        color: #8E0808;
+        background: $theme-gray-light;
+        color: $theme-red;
         padding: 0 5px;
 
         a > & {
@@ -129,12 +127,12 @@ code {
 
 blockquote {
     margin-inline-start: 1.5rem;
-    border-inline-start: 5px solid #DDD;
+    border-inline-start: 5px solid $theme-gray-light;
     padding-inline-start: 1rem;
-    color: #555;
+    color: $theme-gray-dark;
 }
 
 .callout {
     padding: 1rem 2rem;
-    background: #e3ebf2;
+    background: $theme-blue-light;
 }
