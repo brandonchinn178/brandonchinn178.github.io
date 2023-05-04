@@ -27,5 +27,5 @@ RUN gem install bundler
 
 # install deps
 WORKDIR /src
-COPY Gemfile .
+COPY Gemfile Gemfile.lock .
 RUN bundle install
