@@ -35,8 +35,7 @@ data UserBase userId = User
 type User = UserBase UserId
 
 -- Instead of `()`, I also found it useful to create a new `NotSet`
--- data type that's isomorphic to `Void`, except with instances like
--- `Show` actually implemented to show "<not set>".
+-- newtype around `()` with a nice Show instance and such
 type UserNew = UserBase ()
 ```
 
@@ -208,3 +207,7 @@ So the following comparisons will only focus on managing side-effectful operatio
 Overall, I found the Services design pattern to be useful and very straightforward. It's not as clever as MTL, and I do sometimes miss making a function as general as it can be (e.g. "this works for _any_ monad with this interface"). But the ability to stub out _anything_ in unit tests more than makes up for that; I'd much rather have really solid code coverage than having a really precise type signature.
 
 If you end up not choosing to embrace the Services design fully, maybe there's something here that inspires a blend of design patterns that works for your particular system. My hope is that people can take parts of different design patterns that works for them, and the Services design is just one collection of ideas that can help someone else out there.
+
+## Addenda
+
+* Thanks to u/sisyphushappy42 for pointing out that the [Simple Haskell Handbook](https://leanpub.com/simple-haskell-book) uses this pattern!
