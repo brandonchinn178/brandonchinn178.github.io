@@ -12,7 +12,7 @@ exec docker run --rm -it \
     -p "${JEKYLL_PORT}:${JEKYLL_PORT}" \
     --volume="${PWD}:/src" \
     brandonchinn178-gh-pages \
-    bundle exec jekyll serve \
+    jekyll serve \
         --host 0.0.0.0 \
         --port ${JEKYLL_PORT} \
         --livereload \
