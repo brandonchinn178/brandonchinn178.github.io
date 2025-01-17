@@ -75,16 +75,17 @@ header {
     }
 }
 
-h1 {
+h1, h2, h3 {
     @include no-link-style;
+    font-weight: 600;
+}
+h1 {
     font-size: 1.5em;
 }
 h2 {
-    @include no-link-style;
     font-size: 1.3em;
 }
 h3 {
-    @include no-link-style;
     font-size: 1.1em;
 }
 
@@ -92,15 +93,20 @@ ul {
     margin: 0;
 }
 
-h1 {
-    @include no-link-style;
-}
-
 table {
     border-spacing: 0;
     td, th {
         border-bottom: 1px solid $theme-black;
         padding: 0.5rem 1rem;
+    }
+}
+
+main a {
+    color: $theme-blue;
+    font-weight: 600;
+
+    &:visited {
+        color: $theme-purple;
     }
 }
 
