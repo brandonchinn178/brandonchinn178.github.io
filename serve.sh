@@ -17,5 +17,6 @@ exec docker run --rm -it \
         --port ${JEKYLL_PORT} \
         --livereload \
         --livereload-port "${LIVERELOAD_PORT}" \
+        --drafts \
         --future \
         --source docs/
