@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: default.html
 ---
 
 # Hey, how's it going?

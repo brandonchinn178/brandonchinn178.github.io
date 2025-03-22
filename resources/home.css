@@ -1,0 +1,24 @@
+article {
+    --border-style: 1px solid var(--theme-gray);
+
+    padding: 20px 0;
+
+    border-top: var(--border-style);
+}
+article:last-child {
+    border-bottom: var(--border-style);
+}
+
+article h2 {
+    margin: 0;
+}
+
+article span.date {
+    font-size: 1rem;
+    font-weight: normal;
+    font-style: italic;
+}
+
+article p:last-child {
+    margin-bottom: 0;
+}

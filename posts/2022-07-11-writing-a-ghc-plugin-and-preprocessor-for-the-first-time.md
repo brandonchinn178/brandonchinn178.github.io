@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Writing a GHC Plugin + Preprocessor for the first time"
 ---
 

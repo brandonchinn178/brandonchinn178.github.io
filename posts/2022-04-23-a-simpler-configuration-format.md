@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "[RFC] EON: A simpler configuration format"
 ---
 

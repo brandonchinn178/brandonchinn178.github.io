@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Automating Fourmolu releases with GitHub Actions"
 ---
 

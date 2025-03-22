@@ -1,9 +1,8 @@
 ---
-layout: post
 title: 'Mocking is bad, RE: Services design'
 ---
 
-The [previous post]({% post_url 2023-05-03-services-design-pattern %}) discussed a design pattern that enables writing tests with stubbed responses to test complex IO functions. You might have read the post and were reminded of the blog post ["Why mocking is a bad idea"](https://cs-syd.eu/posts/2021-10-22-why-mocking-is-a-bad-idea) and wondered why I'd be recommending such tests. Yes, I also agree that mocking is a bad idea; the difference is that the previous blog post discussed tests that _stubbed_ IO actions, not _mocked_.
+The [previous post]({{ "posts/2023-05-03-services-design-pattern.md" | inputPathToUrl }}) discussed a design pattern that enables writing tests with stubbed responses to test complex IO functions. You might have read the post and were reminded of the blog post ["Why mocking is a bad idea"](https://cs-syd.eu/posts/2021-10-22-why-mocking-is-a-bad-idea) and wondered why I'd be recommending such tests. Yes, I also agree that mocking is a bad idea; the difference is that the previous blog post discussed tests that _stubbed_ IO actions, not _mocked_.
 
 This blog post discusses the concept of mocking in the context of the previous post on the Services design, but it's also relevant in the general context of unit tests vs integration tests.
 

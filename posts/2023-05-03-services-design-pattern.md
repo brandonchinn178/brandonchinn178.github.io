@@ -1,5 +1,4 @@
 ---
-layout: post
 title: The "Services" design pattern
 ---
 
@@ -164,7 +163,7 @@ This makes it extremely clear what case each test is testing, avoids a bunch of 
 
 ## Comparison to other approaches
 
-One of the biggest aspects of the Services design pattern is defining new models instead of sharing models between subsystems or reusing the same models as the database library models. This could also be done with any of the below frameworks for the same advantages (parallel builds, avoid [sharing data types]({% post_url 2023-04-15-sharing-data-types %}), etc.). The [`registry`](https://github.com/etorreborre/registry) library could also be used to manage the services (thanks to [@etorreborre](https://github.com/etorreborre) for the pointer!).
+One of the biggest aspects of the Services design pattern is defining new models instead of sharing models between subsystems or reusing the same models as the database library models. This could also be done with any of the below frameworks for the same advantages (parallel builds, avoid [sharing data types]({{ "posts/2023-04-15-sharing-data-types.md" | inputPathToUrl }}), etc.). The [`registry`](https://github.com/etorreborre/registry) library could also be used to manage the services (thanks to [@etorreborre](https://github.com/etorreborre) for the pointer!).
 
 Additionally, the Services design pattern only discusses designing _subsystems_. When working in the top-level entrypoint, there's still the question of how to pass along the services. At this point, you could utilize MTL or any of the other design patterns to manage the services in the entrypoint, e.g.
 * Instantiate the services fresh every time you call a subsystem
@@ -211,4 +210,4 @@ If you end up not choosing to embrace the Services design fully, maybe there's s
 ## Addenda
 
 * Thanks to [u/sisyphushappy42](https://www.reddit.com/user/sisyphushappy42/) for pointing out that the [Simple Haskell Handbook](https://leanpub.com/simple-haskell-book) uses this pattern!
-* See the [next blog post]({% post_url 2023-05-05-mocking-is-bad-re-services-design %}) for why stubbing in Services design tests is compatible with the belief that mocking is bad
+* See the [next blog post]({{ "posts/2023-05-05-mocking-is-bad-re-services-design.md" | inputPathToUrl }}) for why stubbing in Services design tests is compatible with the belief that mocking is bad

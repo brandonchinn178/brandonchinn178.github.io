@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Oh, THAT'S how a monad is a monoid!
 ---
 

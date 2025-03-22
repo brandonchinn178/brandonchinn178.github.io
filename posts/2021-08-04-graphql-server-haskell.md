@@ -1,5 +1,4 @@
 ---
-layout: post
 title: My ideal GraphQL framework for Haskell
 ---
 

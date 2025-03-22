@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "`forall`s in Data Types"
 ---
 

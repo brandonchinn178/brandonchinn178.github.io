@@ -1,0 +1,18 @@
+article h1 {
+    margin: 0;
+}
+
+article .date {
+    margin-top: 0;
+    font-style: italic;
+}
+
+.footnotes {
+    margin-top: 50px;
+}
+
+footer {
+    margin-top: 50px;
+    border-top: 1px solid var(--theme-gray-light);
+    font-style: italic;
+}

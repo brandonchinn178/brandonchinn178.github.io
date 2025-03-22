@@ -1,0 +1,147 @@
+:root {
+    --theme-white: #fafafa;
+    --theme-black: #1a232b;
+    --theme-gray-dark: #555;
+    --theme-gray: #aaa;
+    --theme-gray-light: #ddd;
+
+    --theme-blue: #37617d;
+    --theme-blue-light: #e3ebf2;
+
+    --theme-purple: #764797;
+
+    --theme-red: #d42f2f;
+
+    --font-sans-serif: Assistant, Roboto, Helvetica, Arial, sans-serif;
+    --font-monospace: Inconsolata, "Lucida Console", Courier, ui-monospace, monospace;
+    --font-display: "Roboto Mono", var(--font-monospace);
+}
+
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans-serif);
+
+    min-width: 600px;
+
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+
+    color: var(--theme-black);
+    background: var(--theme-white);
+}
+
+main {
+    padding: 0 4rem 2rem;
+
+    max-width: 75%;
+    margin: 0 auto;
+    transition: max-width 0.5s;
+}
+@media (max-width: 800px) {
+    main {
+        max-width: 100%;
+    }
+}
+
+header {
+    margin-bottom: 2rem;
+    padding: 1rem;
+
+    color: var(--theme-white);
+    background: var(--theme-blue);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    margin: 0;
+
+    font-family: var(--font-display);
+    font-size: 1.3em;
+}
+
+header ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 20px;
+}
+
+h1, h2, h3 {
+    @include no-link-style;
+    font-weight: 600;
+}
+h1 {
+    font-size: 1.5em;
+}
+h2 {
+    font-size: 1.3em;
+}
+h3 {
+    font-size: 1.1em;
+}
+
+ul {
+    margin: 0;
+}
+
+table {
+    border-spacing: 0;
+    td, th {
+        border-bottom: 1px solid var(--theme-black);
+        padding: 0.5rem 1rem;
+    }
+}
+
+header a,
+h1 a,
+h2 a,
+h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+main a {
+    color: var(--theme-blue);
+    font-weight: 600;
+}
+main a:visited {
+    color: var(--theme-purple);
+}
+
+pre {
+  overflow-x: auto;
+  background: var(--theme-gray-light);
+  padding: 1.5rem;
+}
+
+code {
+    font-family: var(--font-monospace);
+}
+code:not([class]) {
+    background: var(--theme-gray-light);
+    color: var(--theme-red);
+    padding: 0 5px;
+}
+a > code {
+        color: unset;
+        color: -webkit-link; /* unset doesn't work for visited links */
+}
+
+blockquote {
+    margin-inline-start: 1.5rem;
+    border-inline-start: 5px solid var(--theme-gray-light);
+    padding-inline-start: 1rem;
+    color: var(--theme-gray-dark);
+}
+
+.callout {
+    padding: 1rem 2rem;
+    background: var(--theme-blue-light);
+}
