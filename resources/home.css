@@ -19,6 +19,10 @@ article span.date {
     font-style: italic;
 }
 
+article .excerpt :first-child {
+    margin-top: 0;
+}
+
 article p:last-child {
     margin-bottom: 0;
 }

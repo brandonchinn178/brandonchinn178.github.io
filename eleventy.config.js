@@ -17,6 +17,12 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addShortcode("excerpt", function(post) {
     const content = post.templateContent
+
+    const excerptTag = content.indexOf("<!-- excerpt -->")
+    if (excerptTag !== -1) {
+      return content.substring(0, excerptTag)
+    }
+
     const start = content.toLowerCase().indexOf('<p>');
     const end = content.toLowerCase().indexOf('</p>');
     return content.substring(start + 3, end);

@@ -8,6 +8,8 @@ In the summer of 2024, I merged two changes into GHC related to strings:
 
 This work involved a lot of refactoring to how strings were lexed in GHC, with a lot of tricky spots with performance, considering how ubiquitous string literals are in Haskell programs. In this blog post, I will outline a few interesting takeaways from this experience.
 
+<!-- excerpt -->
+
 ## Context + Motivation
 
 GHC uses `alex` to lex an input bytestring into tokens. At a high level, `alex` allows specifying a regex to search for, then run a callback with the substring matching that regex. Generally speaking, GHC will specify a full regex for a lexical entity (e.g. `[0-9]+`) and output a token (e.g. `\s -> ITinteger (read s)`). But for strings, GHC would match the initial double quote character, then manually iterate character-by-character until seeing another double quote.
