@@ -4,6 +4,12 @@ import mdHighlight from "markdown-it-highlightjs"
 export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("resources")
 
+  eleventyConfig.addPreprocessor("drafts", "*", (data, content) => {
+    if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
+      return false
+    }
+  })
+
   eleventyConfig.amendLibrary("md", (mdLib) => {
     mdLib.use(mdFootnote)
     mdLib.use(mdHighlight)
