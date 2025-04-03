@@ -94,10 +94,15 @@ ul {
 
 table {
     border-spacing: 0;
-    td, th {
-        border-bottom: 1px solid var(--theme-black);
-        padding: 0.5rem 1rem;
-    }
+}
+td, th {
+    vertical-align: top;
+    border-bottom: 1px solid var(--theme-black);
+    padding: 0.5rem 1rem;
+}
+table ol {
+    margin: 0;
+    padding-left: 1rem;
 }
 
 header a,

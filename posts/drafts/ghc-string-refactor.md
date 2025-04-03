@@ -34,13 +34,159 @@ When starting to implement multiline strings, the issues were exacerbated:
 1. Multiline strings need to defer escaping characters until after reading all the characters in, which means decoupling the logic where these are done simultaneously
     * See [proposal](https://github.com/ghc-proposals/ghc-proposals/pull/569) for more details
 
+At the end of the day, I was able to refactor the code into something like:
+
+<table>
+<tr><th>Old code</th><th>New code</th></tr>
+<tr><td>
+
+```c
+onRegex('"', (_) => {
+    chars = []
+    while true {
+        c <- popNextChar
+        switch (c) {
+            case '"':
+                return chars
+            case '\\':
+                c <- peekNextChar
+                if isSpace(c) {
+                    skipStringGap
+                } else {
+                    c <- lexEscapeCode
+                    chars += c
+                }
+            default:
+                chars += c
+        }
+    }
+})
+```
+
+</td><td>
+
+```c
+onRegex('"[^"]*"', (chars) => {
+    chars = removeStringGaps(chars)
+    chars = resolveEscapes(chars)
+    return chars
+})
+```
+
+</td></tr></table>
+
 ## Sharing code between normal strings and multiline strings
 
-TODO: multiline strings needed to defer escaping characters, discuss `>=>` vs abstracted manual iteration
+Fundamentally, string processing requires running the following steps, with shared steps bolded:
+
+<table>
+    <tr>
+        <th>Normal strings</th>
+        <th>Multiline strings</th>
+    </tr>
+    <tr>
+        <td>
+            <ol>
+                <li><strong>Collapse gaps</strong></li>
+                <li><strong>Resolve escape characters</strong></li>
+            </ol>
+        </td>
+        <td>
+            <ol>
+                <li><strong>Collapse gaps</strong></li>
+                <li>Split newlines</li>
+                <li>Remove common whitespace prefix</li>
+                <li>Rejoin newlines</li>
+                <li><strong>Resolve escape characters</strong></li>
+            </ol>
+        </td>
+    </tr>
+</table>
+
+Notably, resolving escape characters could throw an error; `\xffffff` is an invalid escape character. So generally speaking, one could think of the post processing steps as a pipeline of `String -> Either LexError String` functions stitched together with `>=>`:
+
+```hs
+processNormal :: String -> Either LexError String
+processNormal =
+      collapseGaps
+  >=> resolveEscapes
+
+processMultiline :: String -> Either LexError String
+processMultiline =
+      collapseGaps
+  >=> splitNewlines
+  >=> rmCommonWhitespacePrefix
+  >=> joinNewlines
+  >=> resolveEscapes
+```
+
+This had a certain elegance to it; if we need to add another failable step in the middle of the pipeline, you can just slot it in. But when I implemented it, we noticed a huge tick in memory usage. Turns out, the use of `Either` with `>=>` compiles into a series of `let` statements, and each `let` statement (as I learned!) corresponds to a heap allocation. Luckily, it turns out that only `resolveEscapes` is failable, so we can keep things pure until the very end. This does mean that if we need to add another failable step to the pipeline, we'll be a bit stuck, but we can figure that out if we get there.
+
+## Including source location in error messages
+
+After refactoring string processing into the above steps, I encountered another issue. Previously, when we were iterating character-by-character, if we encountered an invalid escape character, we threw an error with the location that we were currently at.
+
+```text
+example.hs:1:16: error: [GHC-21231]
+    numeric escape sequence out of range at character '0'
+
+    a = "Hel\x6c000000000000000 World"
+    ~~~~~~~~~~~~~~~^
+```
+
+So naively, to know the location of a character when we throw an error in `resolveEscapes`, we'd have to pass around `[(Char, Pos)]` instead of `[Char]`, which means an extra allocation (for the tuple) for every character in the string. We can't just take the lists separately and pass the `[Pos]` directly to `resolveEscapes` because some of the steps may remove or replace characters (e.g. `collapseGaps`).
+
+The trick I used here was to do the following:
+1. Define the pipeline steps (e.g. `collapseGaps`, `resolveEscapes`) as a polymorphic function `HasChar c => [c] -> Either LexError [c]`
+1. Call the function the first time, optimistically, as `[Char]`. If that passes, no increased memory usage
+1. If that fails, we'll swallow the error and call it a second time with `[(Char, Pos)]`
+    1. This takes a performance + memory hit, but it only happens on an error, when presumably you wouldn't mind a slightly longer wait for better error messages
+
+With some pattern synonyms and some care to concretize the types (to ensure GHC inlines everything), the code is much more readable, with roughly the same performance characteristics, than before!
 
 ## Using alex regexes for strings
 
-TODO: two passes
+Now that I split out the post-processing steps, I was now free to replace the manual character-by-character iteration code with a regex! Now, instead of tracing through the logic to see if it lexes an escape code correctly, you can just look at the (simplified) grammar below and see that it matches the report:
+
+```text
+-- Character sets
+
+$space = " "
+$whitechar = [\n \v $space]
+
+$small = [a-z]
+$large = [A-Z]
+
+$digit = 0-9
+$octit = 0-7
+$hexit = [$digit A-F a-f]
+
+$special = [\(\)\,\;\[\]\`\{\}]
+$symbol  = [\!\#\$\%\&\*\+\.\/\<\=\>\?\@\\\^\|\-\~\:]
+$graphic = [$small $large $symbol $digit $special \_ \" \']
+
+-- Macros
+
+@decimal     = $digit*
+@octal       = $octit*
+@hexadecimal = $hexit*
+
+@gap   = \\ $whitechar+ \\
+@cntrl = $asclarge | \@ | \[ | \\ | \] | \^ | \_
+@ascii = \^ @cntrl | "NUL" | "SOH" | "STX" | "ETX" | "EOT" | "ENQ" | "ACK"
+       | "BEL" | "BS" | "HT" | "LF" | "VT" | "FF" | "CR" | "SO" | "SI" | "DLE"
+       | "DC1" | "DC2" | "DC3" | "DC4" | "NAK" | "SYN" | "ETB" | "CAN"
+       | "EM" | "SUB" | "ESC" | "FS" | "GS" | "RS" | "US" | "SP" | "DEL"
+
+@escape     = \\ ( $charesc | @ascii | @decimal | o @octal | x @hexadecimal )
+@stringchar = ($graphic # [\\ \"]) | $space | @escape | @gap
+
+-- Expressions
+
+\" @stringchar* \"
+```
+
+That `@stringchar` definition is practically the definition in the Haskell report verbatim!
 
 ## Using alex regexes for multiline strings
 
