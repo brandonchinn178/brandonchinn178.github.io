@@ -12,7 +12,7 @@ This work involved a lot of refactoring to how strings were lexed in GHC, with a
 
 ## Context + Motivation
 
-GHC uses `alex` to lex an input bytestring into tokens. At a high level, `alex` allows specifying a regex to search for, then run a callback with the substring matching that regex. Generally speaking, GHC will specify a full regex for a lexical entity (e.g. `[0-9]+`) and output a token (e.g. `\s -> ITinteger (read s)`). But for strings, GHC would match the initial double quote character, then manually iterate character-by-character until seeing another double quote.
+GHC uses `alex` to lex an input bytestring into tokens. At a high level, Alex allows specifying a regex to search for, then run a callback with the substring matching that regex. Generally speaking, GHC will specify a full regex for a lexical entity (e.g. `[0-9]+`) and output a token (e.g. `\s -> ITinteger (read s)`). But for strings, GHC would match the initial double quote character, then manually iterate character-by-character until seeing another double quote.
 
 The initial motivation for this was probably performance, to resolve escape characters at the same time as iterating the input. But it came at the cost of readability; with this implementation, it's difficult to verify if the string lexer conforms to the [Haskell report](https://www.haskell.org/onlinereport/haskell2010/haskellch10.html#x17-17700010.2), which defines a string as simply:
 
@@ -183,11 +183,45 @@ $graphic = [$small $large $symbol $digit $special \_ \" \']
 
 -- Expressions
 
-\" @stringchar* \"
+\" @stringchar* \"     { generate_string_token }
 ```
 
 That `@stringchar` definition is practically the definition in the Haskell report verbatim!
 
 ## Using alex regexes for multiline strings
 
-TODO: multiline strings manual lexing with hybrid approach
+After moving the normal string lexing into Alex's regex lexing, the next step is moving the multiline string lexing into regex. The problem is this piece:
+
+```text
+@stringchar = ($graphic # [\\ \"]) | ...
+```
+
+In normal strings, we exclude bare double quotes, which must be escaped. In multiline strings, double quotes are allowed without escaping, but we need to look ahead to see if there are three in a row (which would terminate the multiline string). Unfortunately, Alex's regex syntax doesn't support lookahead, so there's no way to match the entire multiline string in one regex. But I also didn't want to go back to iterating character-by-character.
+
+So I took a hybrid approach: I defined a separate lexing context with two regexes:
+1. One to lex most of the string as possible, except for quotes
+1. One to lex one or two bare quotes, with no quote following
+
+```text
+<string_multi_content> {
+  @stringchar* ($nl ([\  $tab] | @gap)* @stringchar*)*     { undefined }
+
+  (\" | \"\") / ([\n .] # \")                              { undefined }
+}
+```
+
+Then we can just call Alex manually:
+1. Match the input to one of the patterns in `string_multi_content`
+    1. Throw away the `undefined` action; we're just pattern matching here, not invoking the action, as one might normally do in Alex lexers
+1. Check if there's a triple quote coming up, and exit if so
+1. If not, keep looping
+
+This way, the grammar is wholly defined in regex, Alex can do what it does best (quickly match input to regexes), and we just have to glue them together.
+
+## Stringing the pieces together
+
+By the end of this work, normal and multiline strings are now almost fully specified by normal Alex regexes, bringing the implementation much closer to the specification in the Haskell Report. I was proud of the two tricks I used in this work:
+1. Doing an optimistic pass first, then running the same function a second time to get better error messages
+1. Taking a hybrid approach for multiline strings, doing as much in Alex as possible, and only doing the minimum ourselves
+
+I learned a lot about Haskell memory usage and how GHC inlines code through this project, and am incredibly grateful to [Sebastian Graf](https://gitlab.haskell.org/sgraf812) for working through this with me!
