@@ -22,7 +22,7 @@ string -> " { graphic<" | \> | space | escape | gap } "
 
 That is, a string consists of:
 1. A double quote
-1. Then one or more of either:
+1. Then zero or more of either:
     * A graphical character (except for double quotes or backslashes)
     * A space character
     * An escaped character, or
