@@ -120,7 +120,7 @@ processMultiline =
   >=> resolveEscapes
 ```
 
-This had a certain elegance to it; if we need to add another failable step in the middle of the pipeline, you can just slot it in. But when I implemented it, we noticed a huge tick in memory usage. Turns out, the use of `Either` with `>=>` compiles into a series of `let` statements, and each `let` statement (as I learned!) corresponds to a heap allocation. Luckily, it turns out that only `resolveEscapes` is failable, so we can keep things pure until the very end. This does mean that if we need to add another failable step to the pipeline, we'll be a bit stuck, but we can figure that out if we get there.
+This had a certain elegance to it; if we need to add another failable step in the middle of the pipeline, you can just slot it in. But when I implemented it, we noticed a huge tick in memory usage. Turns out, the use of `Either` with `>=>` compiles into a series of `let` statements, and each `let` statement in Core (as I learned!) corresponds to a heap allocation. Luckily, it turns out that only `resolveEscapes` is failable, so we can keep things pure until the very end. This does mean that if we need to add another failable step to the pipeline, we'll be a bit stuck, but we can figure that out if we get there.
 
 ## Including source location in error messages
 
