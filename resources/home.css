@@ -10,10 +10,16 @@ article:last-child {
 }
 
 article h2 {
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
 }
 
-article span.date {
+article h2 span.date {
     font-size: 1rem;
     font-weight: normal;
     font-style: italic;
