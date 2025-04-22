@@ -9,8 +9,10 @@
     --theme-blue-light: #e3ebf2;
 
     --theme-purple: #764797;
+    --theme-purple-dark-mode: #c0a2d5;
 
     --theme-red: #d42f2f;
+    --theme-red-dark-mode: #fa9084;
 
     --font-sans-serif: Assistant, Roboto, Helvetica, Arial, sans-serif;
     --font-monospace: Inconsolata, "Lucida Console", Courier, ui-monospace, monospace;
@@ -149,4 +151,34 @@ blockquote {
 .callout {
     padding: 1rem 2rem;
     background: var(--theme-blue-light);
+}
+
+/***** Dark mode *****/
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: var(--theme-white);
+        background: var(--theme-black);
+    }
+
+    main a {
+        color: var(--theme-gray);
+    }
+    main a:visited {
+        color: var(--theme-purple-dark-mode);
+    }
+
+    pre {
+        /* match color of the highlightjs theme */
+        background: #282c34;
+    }
+
+    code:not([class]) {
+        background: var(--theme-gray-dark);
+        color: var(--theme-red-dark-mode);
+    }
+
+    blockquote {
+        color: var(--theme-gray-light);
+    }
 }
