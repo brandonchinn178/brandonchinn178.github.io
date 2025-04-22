@@ -27,7 +27,7 @@ html, body {
 body {
     font-family: var(--font-sans-serif);
 
-    min-width: 600px;
+    min-width: 270px;
 
     margin: 0;
     padding: 0;
@@ -44,11 +44,6 @@ main {
     margin: 0 auto;
     transition: max-width 0.5s;
 }
-@media (max-width: 800px) {
-    main {
-        max-width: 100%;
-    }
-}
 
 header {
     margin-bottom: 2rem;
@@ -58,9 +53,11 @@ header {
     background: var(--theme-blue);
 
     display: flex;
+    gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
 }
+
 header h1 {
     margin: 0;
 
@@ -151,6 +148,22 @@ blockquote {
 .callout {
     padding: 1rem 2rem;
     background: var(--theme-blue-light);
+}
+
+/***** Responsive width *****/
+
+@media (max-width: 550px) {
+    main {
+        max-width: 100%;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: start;
+    }
+    header ul {
+        align-self: end;
+    }
 }
 
 /***** Dark mode *****/
