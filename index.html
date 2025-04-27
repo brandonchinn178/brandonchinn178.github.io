@@ -14,7 +14,7 @@ eleventyImport:
             <span class="date">{{ post.date | utcDate }}</span>
         </h2>
         <div class="excerpt">
-            {% excerpt post %}
+            {{ post | excerpt }}
         </div>
     </article>
 {% endfor %}

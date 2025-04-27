@@ -1,16 +1,21 @@
+{% assign currentPost = collections.post | getCollectionItem %}
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% if title %}{{ title }} – {% endif %}Brandon Chinn</title>
+    <title>{{ title | default: 'Blog' }} - Brandon Chinn</title>
 
     <meta charset="UTF-8">
     <meta name="author" content="Brandon Chinn">
-    <meta name="description" content="Brandon Chinn's personal website">
+    <meta name="description" content="Brandon Chinn's Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta property="og:title" content="{% if title %}{{ title }} - {% endif %}Brandon Chinn">
+    <meta property="og:title" content="{{ title | default: '@brandonchinn178' }}">
     <meta property="og:image" content="http://brandonchinn178.github.io/resources/fb-logo.png">
-    <meta property="og:description" content="Brandon Chinn's personal website">
+    {% if currentPost %}
+      <meta property="og:description" content="{{ currentPost | excerpt | striptags }}">
+    {% else %}
+      <meta property="og:description" content="Brandon Chinn's Blog">
+    {% endif %}
     <meta property="og:url" content="https://brandonchinn178.github.io{{ page.url }}">
 
     <meta name="generator" content="{{ eleventy.generator }}">

@@ -1,5 +1,6 @@
 import mdFootnote from "markdown-it-footnote"
 import mdHighlight from "markdown-it-highlightjs"
+import striptags from "striptags"
 
 export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("resources")
@@ -15,7 +16,7 @@ export default function(eleventyConfig) {
     mdLib.use(mdHighlight)
   })
 
-  eleventyConfig.addShortcode("excerpt", function(post) {
+  eleventyConfig.addFilter("excerpt", function(post) {
     const content = post.templateContent
 
     const excerptTag = content.indexOf("<!-- excerpt -->")
@@ -27,6 +28,8 @@ export default function(eleventyConfig) {
     const end = content.toLowerCase().indexOf('</p>');
     return content.substring(start + 3, end);
   })
+
+  eleventyConfig.addFilter("striptags", striptags)
 
   eleventyConfig.addFilter("utcDate", function(value) {
     return new Intl.DateTimeFormat("en-US", {
