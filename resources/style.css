@@ -148,6 +148,7 @@ blockquote {
 .callout {
     padding: 1rem 2rem;
     background: var(--theme-blue-light);
+    color: var(--theme-gray-dark);
 }
 
 /***** Responsive width *****/
