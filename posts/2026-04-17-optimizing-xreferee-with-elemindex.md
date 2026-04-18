@@ -1,5 +1,5 @@
 ---
-title: xreferee parsing optimization
+title: Optimizing xreferee with elemIndex
 ---
 
 [xreferee](https://github.com/brandonchinn178/xreferee) is a linter that checks that every `@(ref:foo)` reference in a git repository corresponds to a `#(ref:foo)` anchor somewhere in the repository. It delegates most of the search to `git grep`, but there's some parsing logic to parse `git grep`'s output. In a [recent PR](https://github.com/brandonchinn178/xreferee/pull/20), I was able to get a 5x speedup with two changes:
